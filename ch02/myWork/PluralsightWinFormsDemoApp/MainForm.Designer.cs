@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.subscriptionView1 = new PluralsightWinFormsDemoApp.SubscriptionView();
+            this.subscriptionView = new PluralsightWinFormsDemoApp.SubscriptionView();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -44,19 +44,19 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.subscriptionView1);
+            this.splitContainer1.Panel1.Controls.Add(this.subscriptionView);
             this.splitContainer1.Panel1MinSize = 180;
             this.splitContainer1.Size = new System.Drawing.Size(764, 444);
             this.splitContainer1.SplitterDistance = 356;
             this.splitContainer1.TabIndex = 0;
             // 
-            // subscriptionView1
+            // subscriptionView
             // 
-            this.subscriptionView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.subscriptionView1.Location = new System.Drawing.Point(0, 0);
-            this.subscriptionView1.Name = "subscriptionView1";
-            this.subscriptionView1.Size = new System.Drawing.Size(356, 444);
-            this.subscriptionView1.TabIndex = 0;
+            this.subscriptionView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.subscriptionView.Location = new System.Drawing.Point(0, 0);
+            this.subscriptionView.Name = "subscriptionView";
+            this.subscriptionView.Size = new System.Drawing.Size(356, 444);
+            this.subscriptionView.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -81,7 +81,7 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private SubscriptionView subscriptionView1;
+        private SubscriptionView subscriptionView;
     }
 }
 

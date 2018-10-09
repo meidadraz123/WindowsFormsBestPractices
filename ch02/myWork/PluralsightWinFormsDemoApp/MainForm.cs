@@ -14,7 +14,6 @@ namespace PluralsightWinFormsDemoApp
         private Episode currentEpisode;
         private EpisodeView episodeView;
         private PodcastView podcastView;
-        //subscriptionView1 subscriptionView1 = new subscriptionView1();
 
         public MainForm()
         {
@@ -24,9 +23,9 @@ namespace PluralsightWinFormsDemoApp
             episodeView.labelDescription.Text = "";
             episodeView.labelEpisodeTitle.Text = "";
             episodeView.labelPublicationDate.Text = "";
-            subscriptionView1.treeViewPodcasts.AfterSelect += OnSelectedEpisodeChanged;
-            subscriptionView1.buttonAddSubscription.Click += OnButtonAddSubscriptionClick;
-            subscriptionView1.buttonRemoveSubscription.Click += OnButtonRemovePodcastClick;
+            subscriptionView.treeViewPodcasts.AfterSelect += OnSelectedEpisodeChanged;
+            subscriptionView.buttonAddSubscription.Click += OnButtonAddSubscriptionClick;
+            subscriptionView.buttonRemoveSubscription.Click += OnButtonRemovePodcastClick;
             episodeView.buttonPlay.Click += OnButtonPlayClick;
         }
 
@@ -64,14 +63,14 @@ namespace PluralsightWinFormsDemoApp
 
         private void SelectFirstEpisode()
         {
-            subscriptionView1.treeViewPodcasts.SelectedNode =
-                subscriptionView1.treeViewPodcasts.Nodes[0].FirstNode;
+            subscriptionView.treeViewPodcasts.SelectedNode =
+                subscriptionView.treeViewPodcasts.Nodes[0].FirstNode;
         }
 
         private void AddPodcastToTreeView(Podcast pod)
         {
             var podNode = new TreeNode(pod.Title) { Tag = pod};
-           subscriptionView1.treeViewPodcasts.Nodes.Add(podNode);
+           subscriptionView.treeViewPodcasts.Nodes.Add(podNode);
             foreach (var episode in pod.Episodes)
             {
                 podNode.Nodes.Add(new TreeNode(episode.Title) { Tag = episode });
@@ -111,7 +110,7 @@ namespace PluralsightWinFormsDemoApp
 
         private void OnSelectedEpisodeChanged(object sender, TreeViewEventArgs e)
         {
-            var selectedEpisode = subscriptionView1.treeViewPodcasts.SelectedNode.Tag as Episode;
+            var selectedEpisode = subscriptionView.treeViewPodcasts.SelectedNode.Tag as Episode;
             if (selectedEpisode != null)
             {
                 splitContainer1.Panel2.Controls.Clear();
@@ -128,7 +127,7 @@ namespace PluralsightWinFormsDemoApp
                 episodeView.textBoxNotes.Text = currentEpisode.Notes ?? "";
             }
 
-            var selectedPodcast = subscriptionView1.treeViewPodcasts.SelectedNode.Tag as Podcast;
+            var selectedPodcast = subscriptionView.treeViewPodcasts.SelectedNode.Tag as Podcast;
             if (selectedPodcast != null)
             {
                 splitContainer1.Panel2.Controls.Clear();
@@ -154,12 +153,12 @@ namespace PluralsightWinFormsDemoApp
 
         private void OnButtonRemovePodcastClick(object sender, EventArgs e)
         {
-            var nodeToRemove = subscriptionView1.treeViewPodcasts.SelectedNode;
+            var nodeToRemove = subscriptionView.treeViewPodcasts.SelectedNode;
             if (nodeToRemove.Parent != null)
             {
                 nodeToRemove = nodeToRemove.Parent;
             }
-            subscriptionView1.treeViewPodcasts.Nodes.Remove(nodeToRemove);
+            subscriptionView.treeViewPodcasts.Nodes.Remove(nodeToRemove);
             SelectFirstEpisode();
         }
 
@@ -180,7 +179,7 @@ namespace PluralsightWinFormsDemoApp
             var serializer = new XmlSerializer(typeof(List<Podcast>));
             using (var s = File.Create("subscriptions.xml"))
             {
-                var podcasts = subscriptionView1.treeViewPodcasts.Nodes
+                var podcasts = subscriptionView.treeViewPodcasts.Nodes
                     .Cast<TreeNode>()
                     .Select( tn => tn.Tag)
                     .OfType<Podcast>()
