@@ -1,2 +1,2 @@
 # WindowsFormsBestPractices
-A Plural sight course for Windows Forms Best Practices
+A Pluralsight course for Windows Forms Best Practices
