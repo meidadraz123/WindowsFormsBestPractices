@@ -31,10 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.subscriptionView1 = new PluralsightWinFormsDemoApp.SubscriptionView();
-            this.episodeView1 = new PluralsightWinFormsDemoApp.EpisodeView();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,10 +46,6 @@
             // 
             this.splitContainer1.Panel1.Controls.Add(this.subscriptionView1);
             this.splitContainer1.Panel1MinSize = 180;
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.episodeView1);
             this.splitContainer1.Size = new System.Drawing.Size(764, 444);
             this.splitContainer1.SplitterDistance = 356;
             this.splitContainer1.TabIndex = 0;
@@ -63,14 +57,6 @@
             this.subscriptionView1.Name = "subscriptionView1";
             this.subscriptionView1.Size = new System.Drawing.Size(356, 444);
             this.subscriptionView1.TabIndex = 0;
-            // 
-            // episodeView1
-            // 
-            this.episodeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.episodeView1.Location = new System.Drawing.Point(0, 0);
-            this.episodeView1.Name = "episodeView1";
-            this.episodeView1.Size = new System.Drawing.Size(404, 444);
-            this.episodeView1.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -86,7 +72,6 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnFormClosed);
             this.Load += new System.EventHandler(this.OnFormLoad);
             this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -97,7 +82,6 @@
 
         private System.Windows.Forms.SplitContainer splitContainer1;
         private SubscriptionView subscriptionView1;
-        private EpisodeView episodeView1;
     }
 }
 

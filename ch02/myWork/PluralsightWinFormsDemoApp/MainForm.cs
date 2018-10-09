@@ -12,20 +12,22 @@ namespace PluralsightWinFormsDemoApp
     public partial class MainForm : Form
     {
         private Episode currentEpisode;
-        //episodeView1 episodeView1 = new episodeView1();
+        private EpisodeView episodeView;
+        private PodcastView podcastView;
         //subscriptionView1 subscriptionView1 = new subscriptionView1();
 
         public MainForm()
         {
             InitializeComponent();
-
-            episodeView1.labelDescription.Text = "";
-            episodeView1.labelEpisodeTitle.Text = "";
-            episodeView1.labelPublicationDate.Text = "";
+            episodeView = new EpisodeView() { Dock = DockStyle.Fill };
+            podcastView = new PodcastView() { Dock = DockStyle.Fill };
+            episodeView.labelDescription.Text = "";
+            episodeView.labelEpisodeTitle.Text = "";
+            episodeView.labelPublicationDate.Text = "";
             subscriptionView1.treeViewPodcasts.AfterSelect += OnSelectedEpisodeChanged;
             subscriptionView1.buttonAddSubscription.Click += OnButtonAddSubscriptionClick;
             subscriptionView1.buttonRemoveSubscription.Click += OnButtonRemovePodcastClick;
-            episodeView1.buttonPlay.Click += OnButtonPlayClick;
+            episodeView.buttonPlay.Click += OnButtonPlayClick;
         }
 
         private void OnFormLoad(object sender, EventArgs e)
@@ -112,16 +114,26 @@ namespace PluralsightWinFormsDemoApp
             var selectedEpisode = subscriptionView1.treeViewPodcasts.SelectedNode.Tag as Episode;
             if (selectedEpisode != null)
             {
+                splitContainer1.Panel2.Controls.Clear();
+                splitContainer1.Panel2.Controls.Add(episodeView);
                 SaveEpisode();
                 currentEpisode = selectedEpisode;
-                episodeView1.labelEpisodeTitle.Text = currentEpisode.Title;
-                episodeView1.labelPublicationDate.Text = currentEpisode.PubDate;
-                episodeView1.labelDescription.Text = currentEpisode.Description;
-                episodeView1.checkBoxIsFavourite.Checked = currentEpisode.IsFavourite;
+                episodeView.labelEpisodeTitle.Text = currentEpisode.Title;
+                episodeView.labelPublicationDate.Text = currentEpisode.PubDate;
+                episodeView.labelDescription.Text = currentEpisode.Description;
+                episodeView.checkBoxIsFavourite.Checked = currentEpisode.IsFavourite;
                 currentEpisode.IsNew = false;
-                episodeView1.numericUpDownRating.Value = currentEpisode.Rating;
-                episodeView1.textBoxTags.Text = String.Join(",", currentEpisode.Tags ?? new string[0]);
-                episodeView1.textBoxNotes.Text = currentEpisode.Notes ?? "";
+                episodeView.numericUpDownRating.Value = currentEpisode.Rating;
+                episodeView.textBoxTags.Text = String.Join(",", currentEpisode.Tags ?? new string[0]);
+                episodeView.textBoxNotes.Text = currentEpisode.Notes ?? "";
+            }
+
+            var selectedPodcast = subscriptionView1.treeViewPodcasts.SelectedNode.Tag as Podcast;
+            if (selectedPodcast != null)
+            {
+                splitContainer1.Panel2.Controls.Clear();
+                splitContainer1.Panel2.Controls.Add(podcastView);
+                podcastView.SetPodcast(selectedPodcast);
             }
         }
 
@@ -129,10 +141,10 @@ namespace PluralsightWinFormsDemoApp
         {
             if (currentEpisode == null) return;
 
-            currentEpisode.Tags = episodeView1.textBoxTags.Text.Split(new[] { ',' }).Select(s => s.Trim()).ToArray();
-            currentEpisode.Rating = (int)episodeView1.numericUpDownRating.Value;
-            currentEpisode.IsFavourite = episodeView1.checkBoxIsFavourite.Checked;
-            currentEpisode.Notes = episodeView1.textBoxNotes.Text;
+            currentEpisode.Tags = episodeView.textBoxTags.Text.Split(new[] { ',' }).Select(s => s.Trim()).ToArray();
+            currentEpisode.Rating = (int)episodeView.numericUpDownRating.Value;
+            currentEpisode.IsFavourite = episodeView.checkBoxIsFavourite.Checked;
+            currentEpisode.Notes = episodeView.textBoxNotes.Text;
         }
 
         private void OnButtonPlayClick(object sender, EventArgs e)

@@ -16,5 +16,11 @@ namespace PluralsightWinFormsDemoApp
         {
             InitializeComponent();
         }
+
+        internal void SetPodcast(Podcast selectedPodcast)
+        {
+            labelTitle.Text = selectedPodcast.Title;
+            labelEpisodeCount.Text = String.Format($"{selectedPodcast.Episodes.Count} episodes");
+        }
     }
 }
