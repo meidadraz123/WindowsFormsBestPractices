@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PluralsightWinFormsDemoApp.Properties;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -76,6 +77,12 @@ namespace PluralsightWinFormsDemoApp
                 AddPodcastToTreeView(pod);
             }
             SelectFirstEpisode();
+            if (Settings.Default.FirstRun)
+            {
+                MessageBox.Show("Welcome! get started by clicking Add to sbscribe to a podcast");
+                Settings.Default.FirstRun = false;
+                Settings.Default.Save();
+            }
         }
 
         private void SelectFirstEpisode()
