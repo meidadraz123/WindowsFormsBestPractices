@@ -36,6 +36,16 @@ namespace PluralsightWinFormsDemoApp
             }
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.Space | Keys.Control) && splitContainer1.Panel2.Controls.Contains(episodeView))
+            {
+                episodeView.buttonPlay.PerformClick();
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         private void OnFormLoad(object sender, EventArgs e)
         {
             List<Podcast> podcasts;

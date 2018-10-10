@@ -60,7 +60,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 51);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(473, 330);
-            this.panel1.TabIndex = 24;
+            this.panel1.TabIndex = 0;
             // 
             // checkBoxIsFavourite
             // 
@@ -68,8 +68,8 @@
             this.checkBoxIsFavourite.Location = new System.Drawing.Point(106, 57);
             this.checkBoxIsFavourite.Name = "checkBoxIsFavourite";
             this.checkBoxIsFavourite.Size = new System.Drawing.Size(64, 17);
-            this.checkBoxIsFavourite.TabIndex = 28;
-            this.checkBoxIsFavourite.Text = "Favorite";
+            this.checkBoxIsFavourite.TabIndex = 5;
+            this.checkBoxIsFavourite.Text = "&Favorite";
             this.checkBoxIsFavourite.UseVisualStyleBackColor = true;
             // 
             // numericUpDownRating
@@ -82,7 +82,7 @@
             0});
             this.numericUpDownRating.Name = "numericUpDownRating";
             this.numericUpDownRating.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDownRating.TabIndex = 27;
+            this.numericUpDownRating.TabIndex = 3;
             // 
             // label2
             // 
@@ -90,8 +90,8 @@
             this.label2.Location = new System.Drawing.Point(10, 75);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(55, 13);
-            this.label2.TabIndex = 24;
-            this.label2.Text = "My Notes:";
+            this.label2.TabIndex = 4;
+            this.label2.Text = "My &Notes:";
             // 
             // label3
             // 
@@ -99,8 +99,8 @@
             this.label3.Location = new System.Drawing.Point(10, 32);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(58, 13);
-            this.label3.TabIndex = 25;
-            this.label3.Text = "My Rating:";
+            this.label3.TabIndex = 2;
+            this.label3.Text = "My &Rating:";
             // 
             // label1
             // 
@@ -108,8 +108,8 @@
             this.label1.Location = new System.Drawing.Point(10, 3);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(51, 13);
-            this.label1.TabIndex = 26;
-            this.label1.Text = "My Tags:";
+            this.label1.TabIndex = 0;
+            this.label1.Text = "My &Tags:";
             // 
             // textBoxNotes
             // 
@@ -120,7 +120,7 @@
             this.textBoxNotes.Multiline = true;
             this.textBoxNotes.Name = "textBoxNotes";
             this.textBoxNotes.Size = new System.Drawing.Size(468, 194);
-            this.textBoxNotes.TabIndex = 23;
+            this.textBoxNotes.TabIndex = 6;
             // 
             // textBoxTags
             // 
@@ -129,7 +129,7 @@
             this.textBoxTags.Location = new System.Drawing.Point(106, 3);
             this.textBoxTags.Name = "textBoxTags";
             this.textBoxTags.Size = new System.Drawing.Size(364, 20);
-            this.textBoxTags.TabIndex = 22;
+            this.textBoxTags.TabIndex = 1;
             // 
             // buttonPlay
             // 
@@ -137,8 +137,8 @@
             this.buttonPlay.Location = new System.Drawing.Point(7, 300);
             this.buttonPlay.Name = "buttonPlay";
             this.buttonPlay.Size = new System.Drawing.Size(75, 23);
-            this.buttonPlay.TabIndex = 21;
-            this.buttonPlay.Text = "Play";
+            this.buttonPlay.TabIndex = 7;
+            this.buttonPlay.Text = "&Play";
             this.buttonPlay.UseVisualStyleBackColor = true;
             // 
             // flowLayoutPanel1
@@ -164,7 +164,7 @@
             this.labelEpisodeTitle.Location = new System.Drawing.Point(3, 0);
             this.labelEpisodeTitle.Name = "labelEpisodeTitle";
             this.labelEpisodeTitle.Size = new System.Drawing.Size(126, 25);
-            this.labelEpisodeTitle.TabIndex = 21;
+            this.labelEpisodeTitle.TabIndex = 0;
             this.labelEpisodeTitle.Text = "{{IN CODE}}";
             // 
             // labelPublicationDate
@@ -175,7 +175,7 @@
             this.labelPublicationDate.Location = new System.Drawing.Point(32, 25);
             this.labelPublicationDate.Name = "labelPublicationDate";
             this.labelPublicationDate.Size = new System.Drawing.Size(67, 13);
-            this.labelPublicationDate.TabIndex = 22;
+            this.labelPublicationDate.TabIndex = 1;
             this.labelPublicationDate.Text = "{{IN CODE}}";
             // 
             // labelDescription
@@ -186,7 +186,7 @@
             this.labelDescription.MaximumSize = new System.Drawing.Size(10000, 150);
             this.labelDescription.Name = "labelDescription";
             this.labelDescription.Size = new System.Drawing.Size(67, 13);
-            this.labelDescription.TabIndex = 23;
+            this.labelDescription.TabIndex = 2;
             this.labelDescription.Text = "{{IN CODE}}";
             // 
             // EpisodeView

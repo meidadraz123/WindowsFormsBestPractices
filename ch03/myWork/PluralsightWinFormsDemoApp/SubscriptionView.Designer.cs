@@ -39,18 +39,18 @@
             this.buttonRemoveSubscription.Location = new System.Drawing.Point(80, 461);
             this.buttonRemoveSubscription.Name = "buttonRemoveSubscription";
             this.buttonRemoveSubscription.Size = new System.Drawing.Size(75, 23);
-            this.buttonRemoveSubscription.TabIndex = 5;
-            this.buttonRemoveSubscription.Text = "Remove";
+            this.buttonRemoveSubscription.TabIndex = 3;
+            this.buttonRemoveSubscription.Text = "Remo&ve";
             this.buttonRemoveSubscription.UseVisualStyleBackColor = true;
             // 
             // buttonAddSubscription
             // 
             this.buttonAddSubscription.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonAddSubscription.Location = new System.Drawing.Point(-1, 462);
+            this.buttonAddSubscription.Location = new System.Drawing.Point(1, 461);
             this.buttonAddSubscription.Name = "buttonAddSubscription";
             this.buttonAddSubscription.Size = new System.Drawing.Size(75, 23);
-            this.buttonAddSubscription.TabIndex = 6;
-            this.buttonAddSubscription.Text = "Add";
+            this.buttonAddSubscription.TabIndex = 2;
+            this.buttonAddSubscription.Text = "&Add";
             this.buttonAddSubscription.UseVisualStyleBackColor = true;
             // 
             // treeViewPodcasts
@@ -61,7 +61,7 @@
             this.treeViewPodcasts.Location = new System.Drawing.Point(-1, 0);
             this.treeViewPodcasts.Name = "treeViewPodcasts";
             this.treeViewPodcasts.Size = new System.Drawing.Size(240, 455);
-            this.treeViewPodcasts.TabIndex = 7;
+            this.treeViewPodcasts.TabIndex = 1;
             // 
             // SubscriptionView
             // 
