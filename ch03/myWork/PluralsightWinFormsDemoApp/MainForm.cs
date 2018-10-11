@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
@@ -80,7 +79,7 @@ namespace PluralsightWinFormsDemoApp
             SelectFirstEpisode();
             if (Settings.Default.FirstRun)
             {
-                MessageBox.Show("Welcome! get started by clicking Add to sbscribe to a podcast");
+                MessageBox.Show("Welcome! Get started by clicking Add to subscribe to a podcast");
                 Settings.Default.FirstRun = false;
                 Settings.Default.Save();
             }
@@ -211,6 +210,11 @@ namespace PluralsightWinFormsDemoApp
                     .ToList();
                 serializer.Serialize(s, podcasts);
             }
+        }
+
+        private void MainForm_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            MessageBox.Show($"Help for {this.Text}");
         }
     }
 }

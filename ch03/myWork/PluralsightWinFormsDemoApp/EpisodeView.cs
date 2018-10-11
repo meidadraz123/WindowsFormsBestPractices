@@ -16,7 +16,7 @@ namespace PluralsightWinFormsDemoApp
         {
             InitializeComponent();
             toolTip1.SetToolTip(textBoxTags, 
-                "Enter tag for this podcast, comma separated");
+                "Enter tags for this podcast, comma separated");
             toolTip1.SetToolTip(buttonPlay, 
                 "Launch Windows Media Player to play this episode");
         }
