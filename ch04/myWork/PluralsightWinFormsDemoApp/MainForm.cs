@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
@@ -48,7 +50,7 @@ namespace PluralsightWinFormsDemoApp
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        private void OnFormLoad(object sender, EventArgs e)
+        private async void OnFormLoad(object sender, EventArgs e)
         {
             List<Podcast> podcasts;
             if (File.Exists("subscriptions.xml"))
@@ -74,13 +76,15 @@ namespace PluralsightWinFormsDemoApp
 
             foreach (var pod in podcasts)
             {
-                if (UpdatePodcast(pod))
+                var updatePodcastTask = Task.Run(() => UpdatePodcast(pod));
+                var firstTask = await Task.WhenAny(updatePodcastTask, Task.Delay(2000)); // timeout for loading the podcast
+                if (firstTask == updatePodcastTask && updatePodcastTask.Result == true)
                 {
                     AddPodcastToTreeView(pod);
                 }
-                
             }
             SelectFirstEpisode();
+
             if (Settings.Default.FirstRun)
             {
                 MessageBox.Show("Welcome! Get started by clicking Add to subscribe to a podcast");
@@ -107,6 +111,8 @@ namespace PluralsightWinFormsDemoApp
 
         bool UpdatePodcast(Podcast podcast)
         {
+            var r = new Random();
+            Thread.Sleep(r.Next(3000));
             var doc = new XmlDocument();
             doc.Load(podcast.SubscriptionUrl);
 
