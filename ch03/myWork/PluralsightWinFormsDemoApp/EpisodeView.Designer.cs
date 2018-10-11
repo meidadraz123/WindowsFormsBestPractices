@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EpisodeView));
             this.panel1 = new System.Windows.Forms.Panel();
             this.checkBoxIsFavourite = new System.Windows.Forms.CheckBox();
             this.numericUpDownRating = new System.Windows.Forms.NumericUpDown();
@@ -58,147 +59,88 @@
             this.panel1.Controls.Add(this.textBoxNotes);
             this.panel1.Controls.Add(this.textBoxTags);
             this.panel1.Controls.Add(this.buttonPlay);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 51);
+            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(473, 330);
-            this.panel1.TabIndex = 0;
             // 
             // checkBoxIsFavourite
             // 
-            this.checkBoxIsFavourite.AutoSize = true;
-            this.checkBoxIsFavourite.Location = new System.Drawing.Point(106, 57);
+            resources.ApplyResources(this.checkBoxIsFavourite, "checkBoxIsFavourite");
             this.checkBoxIsFavourite.Name = "checkBoxIsFavourite";
-            this.checkBoxIsFavourite.Size = new System.Drawing.Size(64, 17);
-            this.checkBoxIsFavourite.TabIndex = 5;
-            this.checkBoxIsFavourite.Text = "&Favorite";
             this.checkBoxIsFavourite.UseVisualStyleBackColor = true;
             // 
             // numericUpDownRating
             // 
-            this.numericUpDownRating.Location = new System.Drawing.Point(106, 30);
+            resources.ApplyResources(this.numericUpDownRating, "numericUpDownRating");
             this.numericUpDownRating.Maximum = new decimal(new int[] {
             5,
             0,
             0,
             0});
             this.numericUpDownRating.Name = "numericUpDownRating";
-            this.numericUpDownRating.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDownRating.TabIndex = 3;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(10, 75);
+            resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(55, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "My &Notes:";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 32);
+            resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(58, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "My &Rating:";
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 3);
+            resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(51, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "My &Tags:";
             // 
             // textBoxNotes
             // 
-            this.textBoxNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxNotes.Location = new System.Drawing.Point(2, 100);
-            this.textBoxNotes.Multiline = true;
+            resources.ApplyResources(this.textBoxNotes, "textBoxNotes");
             this.textBoxNotes.Name = "textBoxNotes";
-            this.textBoxNotes.Size = new System.Drawing.Size(468, 194);
-            this.textBoxNotes.TabIndex = 6;
             // 
             // textBoxTags
             // 
-            this.textBoxTags.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxTags.Location = new System.Drawing.Point(106, 3);
+            resources.ApplyResources(this.textBoxTags, "textBoxTags");
             this.textBoxTags.Name = "textBoxTags";
-            this.textBoxTags.Size = new System.Drawing.Size(364, 20);
-            this.textBoxTags.TabIndex = 1;
+            this.textBoxTags.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.textBoxTags_HelpRequested);
             // 
             // buttonPlay
             // 
-            this.buttonPlay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonPlay.Location = new System.Drawing.Point(7, 300);
+            resources.ApplyResources(this.buttonPlay, "buttonPlay");
             this.buttonPlay.Name = "buttonPlay";
-            this.buttonPlay.Size = new System.Drawing.Size(75, 23);
-            this.buttonPlay.TabIndex = 7;
-            this.buttonPlay.Text = "&Play";
             this.buttonPlay.UseVisualStyleBackColor = true;
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.AutoSize = true;
+            resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
             this.flowLayoutPanel1.Controls.Add(this.labelEpisodeTitle);
             this.flowLayoutPanel1.Controls.Add(this.labelPublicationDate);
             this.flowLayoutPanel1.Controls.Add(this.labelDescription);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(473, 51);
-            this.flowLayoutPanel1.TabIndex = 25;
-            this.flowLayoutPanel1.WrapContents = false;
             // 
             // labelEpisodeTitle
             // 
-            this.labelEpisodeTitle.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.labelEpisodeTitle.AutoSize = true;
-            this.labelEpisodeTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            resources.ApplyResources(this.labelEpisodeTitle, "labelEpisodeTitle");
             this.labelEpisodeTitle.ForeColor = System.Drawing.Color.DarkGray;
-            this.labelEpisodeTitle.Location = new System.Drawing.Point(3, 0);
             this.labelEpisodeTitle.Name = "labelEpisodeTitle";
-            this.labelEpisodeTitle.Size = new System.Drawing.Size(126, 25);
-            this.labelEpisodeTitle.TabIndex = 0;
-            this.labelEpisodeTitle.Text = "{{IN CODE}}";
             // 
             // labelPublicationDate
             // 
-            this.labelPublicationDate.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.labelPublicationDate.AutoSize = true;
-            this.labelPublicationDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPublicationDate.Location = new System.Drawing.Point(32, 25);
+            resources.ApplyResources(this.labelPublicationDate, "labelPublicationDate");
             this.labelPublicationDate.Name = "labelPublicationDate";
-            this.labelPublicationDate.Size = new System.Drawing.Size(67, 13);
-            this.labelPublicationDate.TabIndex = 1;
-            this.labelPublicationDate.Text = "{{IN CODE}}";
             // 
             // labelDescription
             // 
-            this.labelDescription.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.labelDescription.AutoSize = true;
-            this.labelDescription.Location = new System.Drawing.Point(32, 38);
-            this.labelDescription.MaximumSize = new System.Drawing.Size(10000, 150);
+            resources.ApplyResources(this.labelDescription, "labelDescription");
             this.labelDescription.Name = "labelDescription";
-            this.labelDescription.Size = new System.Drawing.Size(67, 13);
-            this.labelDescription.TabIndex = 2;
-            this.labelDescription.Text = "{{IN CODE}}";
             // 
             // EpisodeView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Name = "EpisodeView";
-            this.Size = new System.Drawing.Size(473, 381);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRating)).EndInit();
