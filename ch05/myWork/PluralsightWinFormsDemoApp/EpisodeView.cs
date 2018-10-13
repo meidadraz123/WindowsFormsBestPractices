@@ -19,7 +19,7 @@ namespace PluralsightWinFormsDemoApp
                 "Enter tags for this podcast, comma separated");
         }
 
-        private void textBoxTags_HelpRequested(object sender, HelpEventArgs hlpevent)
+        private void OnTextBoxTagsHelpRequested(object sender, HelpEventArgs hlpevent)
         {
             MessageBox.Show(TextResources.TagsHelp);
         }

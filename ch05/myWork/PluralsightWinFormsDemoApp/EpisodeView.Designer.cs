@@ -92,7 +92,7 @@
             // 
             resources.ApplyResources(this.textBoxMyTags, "textBoxMyTags");
             this.textBoxMyTags.Name = "textBoxMyTags";
-            this.textBoxMyTags.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.textBoxTags_HelpRequested);
+            this.textBoxMyTags.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.OnTextBoxTagsHelpRequested);
             // 
             // flowLayoutPanelEpisodeInfo
             // 
@@ -125,6 +125,7 @@
             this.Controls.Add(this.panelEpisodeEditableInfo);
             this.Controls.Add(this.flowLayoutPanelEpisodeInfo);
             this.Name = "EpisodeView";
+            this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.OnTextBoxTagsHelpRequested);
             this.panelEpisodeEditableInfo.ResumeLayout(false);
             this.panelEpisodeEditableInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMyRating)).EndInit();

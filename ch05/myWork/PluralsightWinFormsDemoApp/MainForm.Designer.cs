@@ -31,8 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.splitContainerMainForm = new System.Windows.Forms.SplitContainer();
             this.toolStripMainForm = new System.Windows.Forms.ToolStrip();
-            this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonRemove = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonAddSubscription = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonRemoveSubscription = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonPlay = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonPause = new System.Windows.Forms.ToolStripButton();
@@ -59,8 +59,8 @@
             // 
             this.toolStripMainForm.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolStripMainForm.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButtonAdd,
-            this.toolStripButtonRemove,
+            this.toolStripButtonAddSubscription,
+            this.toolStripButtonRemoveSubscription,
             this.toolStripSeparator1,
             this.toolStripButtonPlay,
             this.toolStripButtonPause,
@@ -76,23 +76,23 @@
             // 
             // toolStripButtonAdd
             // 
-            this.toolStripButtonAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonAdd.Image = global::PluralsightWinFormsDemoApp.IconResources.add_icon_32;
-            this.toolStripButtonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonAdd.Name = "toolStripButtonAdd";
-            this.toolStripButtonAdd.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButtonAdd.Text = "Play";
-            this.toolStripButtonAdd.Click += new System.EventHandler(this.OnToolStripButtonAddSubscriptionClick);
+            this.toolStripButtonAddSubscription.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonAddSubscription.Image = global::PluralsightWinFormsDemoApp.IconResources.add_icon_32;
+            this.toolStripButtonAddSubscription.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonAddSubscription.Name = "toolStripButtonAdd";
+            this.toolStripButtonAddSubscription.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButtonAddSubscription.Text = "Play";
+            this.toolStripButtonAddSubscription.Click += new System.EventHandler(this.OnToolStripButtonAddSubscriptionClick);
             // 
             // toolStripButtonRemove
             // 
-            this.toolStripButtonRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonRemove.Image = global::PluralsightWinFormsDemoApp.IconResources.remove_icon_32;
-            this.toolStripButtonRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonRemove.Name = "toolStripButtonRemove";
-            this.toolStripButtonRemove.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButtonRemove.Text = "Remove podcast subscription";
-            this.toolStripButtonRemove.Click += new System.EventHandler(this.OnToolStripButtonRemovePodcastClick);
+            this.toolStripButtonRemoveSubscription.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonRemoveSubscription.Image = global::PluralsightWinFormsDemoApp.IconResources.remove_icon_32;
+            this.toolStripButtonRemoveSubscription.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonRemoveSubscription.Name = "toolStripButtonRemove";
+            this.toolStripButtonRemoveSubscription.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButtonRemoveSubscription.Text = "Remove podcast subscription";
+            this.toolStripButtonRemoveSubscription.Click += new System.EventHandler(this.OnToolStripButtonRemovePodcastClick);
             // 
             // toolStripSeparator1
             // 
@@ -161,9 +161,9 @@
             this.MinimumSize = new System.Drawing.Size(400, 415);
             this.Name = "MainForm";
             this.Text = "My Podcasts";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnFormClosed);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnMainFormClosed);
             this.Load += new System.EventHandler(this.OnFormLoad);
-            this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.MainForm_HelpRequested);
+            this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.OnMainFormHelpRequested);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMainForm)).EndInit();
             this.splitContainerMainForm.ResumeLayout(false);
             this.toolStripMainForm.ResumeLayout(false);
@@ -177,8 +177,8 @@
 
         private System.Windows.Forms.SplitContainer splitContainerMainForm;
         private System.Windows.Forms.ToolStrip toolStripMainForm;
-        private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
-        private System.Windows.Forms.ToolStripButton toolStripButtonRemove;
+        private System.Windows.Forms.ToolStripButton toolStripButtonAddSubscription;
+        private System.Windows.Forms.ToolStripButton toolStripButtonRemoveSubscription;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripButtonPlay;
         private System.Windows.Forms.ToolStripButton toolStripButtonPause;

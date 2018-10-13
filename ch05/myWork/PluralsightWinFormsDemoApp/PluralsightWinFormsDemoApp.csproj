@@ -96,6 +96,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TextResources.fr.resx</DependentUpon>
     </Compile>
+    <Compile Include="XmlRssChannelNodeNotFoundException.cs" />
     <EmbeddedResource Include="EpisodeView.en-GB.resx">
       <DependentUpon>EpisodeView.cs</DependentUpon>
       <SubType>Designer</SubType>

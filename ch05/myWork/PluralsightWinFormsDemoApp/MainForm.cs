@@ -43,7 +43,7 @@ namespace PluralsightWinFormsDemoApp
         {
             if (keyData == (Keys.Space | Keys.Control) && splitContainerMainForm.Panel2.Controls.Contains(episodeView))
             {
-                //episodeView.buttonPlay.PerformClick();
+                toolStripButtonPlay.PerformClick();
                 return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
@@ -77,7 +77,7 @@ namespace PluralsightWinFormsDemoApp
             {
                 var updatePodcastTask = Task.Run(() => UpdatePodcast(pod));
                 var firstTask = await Task.WhenAny(updatePodcastTask, Task.Delay(5000)); // timeout for loading the podcast
-                if (firstTask == updatePodcastTask && updatePodcastTask.Result == true)
+                if (firstTask == updatePodcastTask)
                 {
                     AddPodcastToTreeView(pod);
                 }
@@ -94,8 +94,11 @@ namespace PluralsightWinFormsDemoApp
 
         private void SelectFirstEpisode()
         {
-            subscriptionView.treeViewPodcasts.SelectedNode =
-                subscriptionView.treeViewPodcasts.Nodes[0].FirstNode;
+            if (subscriptionView.treeViewPodcasts.GetNodeCount(false) != 0)
+            {
+                subscriptionView.treeViewPodcasts.SelectedNode =
+                    subscriptionView.treeViewPodcasts.Nodes[0].FirstNode;
+            }
         }
 
         private void AddPodcastToTreeView(Podcast pod)
@@ -108,7 +111,7 @@ namespace PluralsightWinFormsDemoApp
             }
         }
 
-        bool UpdatePodcast(Podcast podcast)
+        void UpdatePodcast(Podcast podcast)
         {
             var r = new Random();
             Thread.Sleep(r.Next(3000));
@@ -116,15 +119,21 @@ namespace PluralsightWinFormsDemoApp
             doc.Load(podcast.SubscriptionUrl);
 
             XmlElement channel;
-            if (doc.HasChildNodes && doc.ChildNodes.Cast<XmlNode>().Where(x => x.Name == "rss").Any())
+            try
             {
                 channel = doc["rss"]["channel"];
             }
-            else
+            // For example: 
+            // 1 - http://feeds.feedburner.com/soundcode is a valid XML document to a Blog site but it's not a Podcast URL
+            // 2 - https://www.nasa.gov/rss/dyn/breaking_news.rss is a valid XML document and contain the RSS->Channel node and therefore
+            //     it won't cause an exception and will load currently, but when trying to play the podcast an exception will be thrown 
+            //     since the "episode.AudioFile" string is not a URL toa podcast audio file. 
+            // TODO: need to verify that the episode.AudioFile is indeed playable.
+            catch (NullReferenceException ex) 
             {
-                MessageBox.Show("Sorry, the URL is not a podcast feed");
-                return false;
+                throw new XmlRssChannelNodeNotFoundException("Sorry, this is not a Podcast URL. Could not find the rss->channel node inside the XML document",ex);
             }
+        
             XmlNodeList items = channel.GetElementsByTagName("item");
             podcast.Title = channel["title"].InnerText;
             podcast.Link = channel["link"].InnerText;
@@ -148,8 +157,9 @@ namespace PluralsightWinFormsDemoApp
                     podcast.Episodes.Add(episode);
                 }
             }
-            return true;
         }
+
+
 
         private void OnSelectedEpisodeChanged(object sender, TreeViewEventArgs e)
         {
@@ -240,10 +250,8 @@ namespace PluralsightWinFormsDemoApp
                 var pod = new Podcast() { SubscriptionUrl = form.PodcastUrl };
                 try
                 {
-                    if (UpdatePodcast(pod))
-                    {
-                        AddPodcastToTreeView(pod);
-                    }
+                    UpdatePodcast(pod);
+                    AddPodcastToTreeView(pod);
                 }
                 catch (WebException)
                 {
@@ -253,11 +261,15 @@ namespace PluralsightWinFormsDemoApp
                 {
                     MessageBox.Show("Sorry, the URL is not a podcast feed");
                 }
+                catch (XmlRssChannelNodeNotFoundException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
 
             }
         }
 
-        private void OnFormClosed(object sender, FormClosedEventArgs e)
+        private void OnMainFormClosed(object sender, FormClosedEventArgs e)
         {
             SaveEpisode();
             var serializer = new XmlSerializer(typeof(List<Podcast>));
@@ -276,7 +288,7 @@ namespace PluralsightWinFormsDemoApp
             }
         }
 
-        private void MainForm_HelpRequested(object sender, HelpEventArgs hlpevent)
+        private void OnMainFormHelpRequested(object sender, HelpEventArgs hlpevent)
         {
             MessageBox.Show($"Help for {this.Text}");
         }
