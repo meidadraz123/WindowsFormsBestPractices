@@ -27,7 +27,9 @@ namespace PluralsightWinFormsDemoApp
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            var mainFormView = new MainForm();
+            var mainFormPresenter = new MainFormPresenter(mainFormView);
+            Application.Run(mainFormView);
         }
 
         private static void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)

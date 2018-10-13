@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace PluralsightWinFormsDemoApp
@@ -7,6 +8,7 @@ namespace PluralsightWinFormsDemoApp
         public string SubscriptionUrl { get; set;  }
         public string Title { get; set; }
         public string Description { get; set; }
+        public Guid Id { get; set; }
         public string Link { get; set; }
         public List<Episode> Episodes { get; set; }
     }

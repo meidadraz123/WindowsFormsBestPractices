@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace PluralsightWinFormsDemoApp
 {
-    public partial class EpisodeView : UserControl
+    public partial class EpisodeView : UserControl, IEpisodeView
     {
         public EpisodeView()
         {
@@ -19,9 +19,75 @@ namespace PluralsightWinFormsDemoApp
                 "Enter tags for this podcast, comma separated");
         }
 
+        public string Title
+        {
+            set
+            {
+                labelEpisodeTitle.Text = value;
+            }
+        }
+
+        public string PubDate
+        {
+            set
+            {
+                labelPublicationDate.Text = value;
+            }
+        }
+        public string Description
+        {
+            set
+            {
+                labelDescription.Text = value;
+            }
+        }
+        public string Tags
+        {
+            get
+            {
+                return textBoxMyTags.Text;
+            }
+            set
+            {
+                textBoxMyTags.Text = value;
+            }
+        }
+        public string Notes
+        {
+            get
+            {
+                return textBoxMyNotes.Text;
+            }
+            set
+            {
+                textBoxMyNotes.Text = value;
+            }
+        }
+        public int Rating
+        {
+            get
+            {
+                return (int)numericUpDownMyRating.Value;
+            }
+            set
+            {
+                numericUpDownMyRating.Value = value;
+            }
+        }
+
         private void OnTextBoxTagsHelpRequested(object sender, HelpEventArgs hlpevent)
         {
             MessageBox.Show(TextResources.TagsHelp);
         }
+    }
+
+    public interface IEpisodeView
+    {
+        string Title { set; }
+        string PubDate { set; }
+        string Description { set; }
+        string Tags { get; set; }
+        string Notes { get; set; }
+        int Rating { get; set; }
     }
 }

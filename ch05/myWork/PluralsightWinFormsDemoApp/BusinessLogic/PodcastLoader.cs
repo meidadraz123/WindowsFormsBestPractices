@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -15,7 +13,7 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
 
         }
 
-        public async Task UpdatedPodcast(Podcast podcast)
+        public async Task LoadPodcast(Podcast podcast)
         {
             var r = new Random();
             await Task.Delay(r.Next(3000));
