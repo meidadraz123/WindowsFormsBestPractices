@@ -37,14 +37,14 @@
             this.labelMyTags = new System.Windows.Forms.Label();
             this.textBoxMyNotes = new System.Windows.Forms.TextBox();
             this.textBoxMyTags = new System.Windows.Forms.TextBox();
-            this.flowLayoutPanelEpisodeInfo = new System.Windows.Forms.FlowLayoutPanel();
+            this.flowLayoutPanelEpisodeStaticInfo = new System.Windows.Forms.FlowLayoutPanel();
             this.labelEpisodeTitle = new System.Windows.Forms.Label();
             this.labelPublicationDate = new System.Windows.Forms.Label();
             this.labelDescription = new System.Windows.Forms.Label();
             this.toolTipEpisodeView = new System.Windows.Forms.ToolTip(this.components);
             this.panelEpisodeEditableInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMyRating)).BeginInit();
-            this.flowLayoutPanelEpisodeInfo.SuspendLayout();
+            this.flowLayoutPanelEpisodeStaticInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelEpisodeEditableInfo
@@ -94,13 +94,13 @@
             this.textBoxMyTags.Name = "textBoxMyTags";
             this.textBoxMyTags.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.OnTextBoxTagsHelpRequested);
             // 
-            // flowLayoutPanelEpisodeInfo
+            // flowLayoutPanelEpisodeStaticInfo
             // 
-            resources.ApplyResources(this.flowLayoutPanelEpisodeInfo, "flowLayoutPanelEpisodeInfo");
-            this.flowLayoutPanelEpisodeInfo.Controls.Add(this.labelEpisodeTitle);
-            this.flowLayoutPanelEpisodeInfo.Controls.Add(this.labelPublicationDate);
-            this.flowLayoutPanelEpisodeInfo.Controls.Add(this.labelDescription);
-            this.flowLayoutPanelEpisodeInfo.Name = "flowLayoutPanelEpisodeInfo";
+            resources.ApplyResources(this.flowLayoutPanelEpisodeStaticInfo, "flowLayoutPanelEpisodeStaticInfo");
+            this.flowLayoutPanelEpisodeStaticInfo.Controls.Add(this.labelEpisodeTitle);
+            this.flowLayoutPanelEpisodeStaticInfo.Controls.Add(this.labelPublicationDate);
+            this.flowLayoutPanelEpisodeStaticInfo.Controls.Add(this.labelDescription);
+            this.flowLayoutPanelEpisodeStaticInfo.Name = "flowLayoutPanelEpisodeStaticInfo";
             // 
             // labelEpisodeTitle
             // 
@@ -123,14 +123,14 @@
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panelEpisodeEditableInfo);
-            this.Controls.Add(this.flowLayoutPanelEpisodeInfo);
+            this.Controls.Add(this.flowLayoutPanelEpisodeStaticInfo);
             this.Name = "EpisodeView";
             this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.OnTextBoxTagsHelpRequested);
             this.panelEpisodeEditableInfo.ResumeLayout(false);
             this.panelEpisodeEditableInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMyRating)).EndInit();
-            this.flowLayoutPanelEpisodeInfo.ResumeLayout(false);
-            this.flowLayoutPanelEpisodeInfo.PerformLayout();
+            this.flowLayoutPanelEpisodeStaticInfo.ResumeLayout(false);
+            this.flowLayoutPanelEpisodeStaticInfo.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -145,7 +145,7 @@
         private System.Windows.Forms.Label labelMyTags;
         public System.Windows.Forms.TextBox textBoxMyNotes;
         public System.Windows.Forms.TextBox textBoxMyTags;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelEpisodeInfo;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelEpisodeStaticInfo;
         public System.Windows.Forms.Label labelEpisodeTitle;
         public System.Windows.Forms.Label labelPublicationDate;
         public System.Windows.Forms.Label labelDescription;

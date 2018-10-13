@@ -297,7 +297,7 @@
   <data name="&gt;&gt;panelEpisodeEditableInfo.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="flowLayoutPanelEpisodeInfo.AutoSize" type="System.Boolean, mscorlib">
+  <data name="flowLayoutPanelEpisodeStaticInfo.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="labelEpisodeTitle.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -328,7 +328,7 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;labelEpisodeTitle.Parent" xml:space="preserve">
-    <value>flowLayoutPanelEpisodeInfo</value>
+    <value>flowLayoutPanelEpisodeStaticInfo</value>
   </data>
   <data name="&gt;&gt;labelEpisodeTitle.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -361,7 +361,7 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;labelPublicationDate.Parent" xml:space="preserve">
-    <value>flowLayoutPanelEpisodeInfo</value>
+    <value>flowLayoutPanelEpisodeStaticInfo</value>
   </data>
   <data name="&gt;&gt;labelPublicationDate.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -394,39 +394,39 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;labelDescription.Parent" xml:space="preserve">
-    <value>flowLayoutPanelEpisodeInfo</value>
+    <value>flowLayoutPanelEpisodeStaticInfo</value>
   </data>
   <data name="&gt;&gt;labelDescription.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="flowLayoutPanelEpisodeInfo.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="flowLayoutPanelEpisodeStaticInfo.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
   </data>
-  <data name="flowLayoutPanelEpisodeInfo.FlowDirection" type="System.Windows.Forms.FlowDirection, System.Windows.Forms">
+  <data name="flowLayoutPanelEpisodeStaticInfo.FlowDirection" type="System.Windows.Forms.FlowDirection, System.Windows.Forms">
     <value>TopDown</value>
   </data>
-  <data name="flowLayoutPanelEpisodeInfo.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="flowLayoutPanelEpisodeStaticInfo.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="flowLayoutPanelEpisodeInfo.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="flowLayoutPanelEpisodeStaticInfo.Size" type="System.Drawing.Size, System.Drawing">
     <value>473, 51</value>
   </data>
-  <data name="flowLayoutPanelEpisodeInfo.TabIndex" type="System.Int32, mscorlib">
+  <data name="flowLayoutPanelEpisodeStaticInfo.TabIndex" type="System.Int32, mscorlib">
     <value>25</value>
   </data>
-  <data name="flowLayoutPanelEpisodeInfo.WrapContents" type="System.Boolean, mscorlib">
+  <data name="flowLayoutPanelEpisodeStaticInfo.WrapContents" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="&gt;&gt;flowLayoutPanelEpisodeInfo.Name" xml:space="preserve">
-    <value>flowLayoutPanelEpisodeInfo</value>
+  <data name="&gt;&gt;flowLayoutPanelEpisodeStaticInfo.Name" xml:space="preserve">
+    <value>flowLayoutPanelEpisodeStaticInfo</value>
   </data>
-  <data name="&gt;&gt;flowLayoutPanelEpisodeInfo.Type" xml:space="preserve">
+  <data name="&gt;&gt;flowLayoutPanelEpisodeStaticInfo.Type" xml:space="preserve">
     <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;flowLayoutPanelEpisodeInfo.Parent" xml:space="preserve">
+  <data name="&gt;&gt;flowLayoutPanelEpisodeStaticInfo.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;flowLayoutPanelEpisodeInfo.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;flowLayoutPanelEpisodeStaticInfo.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <metadata name="toolTipEpisodeView.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
