@@ -16,7 +16,7 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
         public async Task LoadPodcast(Podcast podcast)
         {
             var r = new Random();
-            await Task.Delay(r.Next(3000));
+            await Task.Delay(r.Next(1000));
             var doc = new XmlDocument();
             await Task.Run( () => doc.Load(podcast.SubscriptionUrl));
 
@@ -47,7 +47,7 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
                 var episode = podcast.Episodes.FirstOrDefault(e => e.Guid == guid);
                 if (episode == null)
                 {
-                    episode = new Episode() { Guid = guid, IsNew = true };
+                    episode = new Episode() { Guid = guid, IsNew = true};
                     episode.Title = item["title"].InnerText;
                     episode.PubDate = item["pubDate"].InnerText;
                     var xmlElement = item["description"];

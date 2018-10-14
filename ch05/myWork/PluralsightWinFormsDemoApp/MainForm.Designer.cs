@@ -64,6 +64,7 @@
             this.Controls.Add(this.splitContainerMainForm);
             this.Controls.Add(this.toolBarView);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(400, 415);
             this.Name = "MainForm";
             this.Text = "My Podcasts";

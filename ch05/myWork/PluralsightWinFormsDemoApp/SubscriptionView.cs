@@ -46,7 +46,12 @@ namespace PluralsightWinFormsDemoApp
 
         public void SelectNode(string key)
         {
-            treeViewPodcasts.SelectedNode = treeViewPodcasts.Nodes[key];
+            treeViewPodcasts.SelectedNode = treeViewPodcasts.Nodes.Find(key, true)[0];
+        }
+
+        public bool IsEmpty()
+        {
+            return treeViewPodcasts.Nodes.Count == 0;
         }
     }
 
@@ -57,6 +62,7 @@ namespace PluralsightWinFormsDemoApp
         void AddNode(TreeNode treeNode);
         void RemoveNode(string key);
         void SelectNode(string key);
+        bool IsEmpty();
 
         event EventHandler SelectionChanged;
     }

@@ -39,7 +39,7 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
             player = null;
         }
 
-        public void Play()
+        public async Task Play()
         {
             if (currentEpisode == null)
             {
@@ -57,7 +57,7 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
                 try
                 {
                     player = new WaveOutEvent();
-                    player.Init(new MediaFoundationReader(currentEpisode.AudioFile));
+                    await Task.Run( () => player.Init(new MediaFoundationReader(currentEpisode.AudioFile)));
 
                 }
                 catch (Exception ex)
