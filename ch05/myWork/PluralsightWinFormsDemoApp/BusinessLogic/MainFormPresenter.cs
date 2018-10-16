@@ -1,5 +1,5 @@
 ﻿using PluralsightWinFormsDemoApp.BusinessLogic;
-using PluralsightWinFormsDemoApp.Properties;
+using PluralsightWinFormsDemoApp.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,24 +9,42 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace PluralsightWinFormsDemoApp
+namespace PluralsightWinFormsDemoApp.BusinessLogic
 {
     class MainFormPresenter
     {
         private readonly IMainFormView mainFormView;
         private Episode currentEpisode;
-        private readonly PodcastPlayer podcastPlayer;
-        private readonly SubscriptionManager subscriptionManager;
-        private readonly PodcastLoader podcastLoader;
+        private readonly IPodcastPlayer podcastPlayer;
+        private readonly ISubscriptionManager subscriptionManager;
+        private readonly IPodcastLoader podcastLoader;
         private readonly List<Podcast> podcasts;
 
         private readonly ISubscriptionView subscriptionView;
         private readonly IEpisodeView episodeView;
         private readonly IToolbarView toolbarView;
         private readonly IPodcastView podcastView;
+        private readonly IMessageBoxDisplayService messageBoxDisplayService;
+        private readonly ISettingsService settingsService;
+        private readonly INewSubscriptionService newSubscriptionService;
 
-        public MainFormPresenter( IMainFormView mainFormView)
+        public MainFormPresenter( IMainFormView mainFormView,
+            IPodcastLoader podcastLoader,
+            ISubscriptionManager subscriptionManager,
+            IPodcastPlayer podcastPlayer,
+            IMessageBoxDisplayService messageBoxDisplayService,
+            ISettingsService settingsService,
+            ISystemInformationService systemInformationService,
+            INewSubscriptionService newSubscriptionService)
         {
+            this.podcastPlayer = podcastPlayer;
+            this.subscriptionManager = subscriptionManager;
+            this.podcastLoader = podcastLoader;
+            this.messageBoxDisplayService = messageBoxDisplayService;
+            this.settingsService = settingsService;
+            this.newSubscriptionService = newSubscriptionService;
+
+
             subscriptionView = mainFormView.SubscriptionView;
             episodeView = mainFormView.EpisodeView;
             toolbarView = mainFormView.ToolbarView;
@@ -50,13 +68,10 @@ namespace PluralsightWinFormsDemoApp
             episodeView.Description = "";
             episodeView.PubDate= "";
             subscriptionView.SelectionChanged += OnSelectedEpisodeChanged;
-            if (!SystemInformation.HighContrast)
+            if (! systemInformationService.IsHighContrastColourScheme)
             {
                 mainFormView.BackColor = System.Drawing.Color.White;
             }
-            subscriptionManager = new SubscriptionManager("subscriptions.xml");
-            podcastLoader = new PodcastLoader();
-            podcastPlayer = new PodcastPlayer();
             podcasts = subscriptionManager.LoadPodcasts();
         }
 
@@ -89,17 +104,17 @@ namespace PluralsightWinFormsDemoApp
                 }
             }
 
-            if (Settings.Default.FirstRun)
+            if (settingsService.FirstRun)
             {
-                MessageBox.Show("Welcome! Get started by clicking Add to subscribe to a podcast");
-                Settings.Default.FirstRun = false;
-                Settings.Default.Save();
+                messageBoxDisplayService.Show("Welcome! Get started by clicking Add to subscribe to a podcast");
+                settingsService.FirstRun = false;
+                settingsService.Save();
             }
         }
 
         private void OnHelpRequested(object sender, System.Windows.Forms.HelpEventArgs hlpevent)
         {
-            MessageBox.Show($"Help for {sender.ToString()}");
+            messageBoxDisplayService.Show($"Help for {sender.ToString()}");
         }
 
         private void OnButtonEpisodeFavouriteChanged(object sender, EventArgs e)
@@ -116,20 +131,20 @@ namespace PluralsightWinFormsDemoApp
             {
                 return;
             }
-            if (subscriptionView.SelectedNode.Tag is Episode selectedEdepisode)
+            if (subscriptionView.SelectedNode.Tag is Episode selectedEpisode)
             {
                 mainFormView.ShowEpisodeView();
                 SaveEpisode();
-                currentEpisode = selectedEdepisode;
+                currentEpisode = selectedEpisode;
                 episodeView.Title = currentEpisode.Title;
                 episodeView.PubDate = currentEpisode.PubDate;
                 episodeView.Description = currentEpisode.Description;
                 toolbarView.EpisodeIsFavourite = currentEpisode.IsFavourite;
                 currentEpisode.IsNew = false;
                 episodeView.Rating= currentEpisode.Rating;
-                episodeView.Tags= string.Join(",", currentEpisode.Tags ?? new string[0]);
+                episodeView.Tags= String.Join(",", currentEpisode.Tags ?? new string[0]);
                 episodeView.Notes = currentEpisode.Notes ?? "";
-                podcastPlayer.LoadEpisode(selectedEdepisode);
+                podcastPlayer.LoadEpisode(currentEpisode);
             }
 
             if (subscriptionView.SelectedNode.Tag is Podcast selectedPodcast)
@@ -182,10 +197,10 @@ namespace PluralsightWinFormsDemoApp
 
         private async void OnButtonAddSubscriptionClick(object sender, EventArgs e)
         {
-            var form = new NewPodcastForm();
-            if (form.ShowDialog() == DialogResult.OK)
+            var newPodcastUrl = newSubscriptionService.GetSubscriptionUrl();
+            if (newPodcastUrl != null)
             {
-                var podcast = new Podcast() { SubscriptionUrl = form.PodcastUrl };
+                var podcast = new Podcast() { SubscriptionUrl = newPodcastUrl };
                 try
                 {
                     await podcastLoader.LoadPodcast(podcast);
@@ -194,15 +209,15 @@ namespace PluralsightWinFormsDemoApp
                 }
                 catch (WebException)
                 {
-                    MessageBox.Show("Sorry, that podcast could not be found. Please check the URL");
+                    messageBoxDisplayService.Show("Sorry, that podcast could not be found. Please check the URL");
                 }
                 catch (XmlException)
                 {
-                    MessageBox.Show("Sorry, the URL is not a podcast feed");
+                    messageBoxDisplayService.Show("Sorry, the URL is not a podcast feed");
                 }
                 catch (XmlRssChannelNodeNotFoundException ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    messageBoxDisplayService.Show(ex.Message);
                 }
             }
         }

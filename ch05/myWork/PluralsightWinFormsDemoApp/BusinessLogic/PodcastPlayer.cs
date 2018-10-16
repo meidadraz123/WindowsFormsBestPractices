@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NAudio.Wave;
+using PluralsightWinFormsDemoApp.Model;
 
 namespace PluralsightWinFormsDemoApp.BusinessLogic
 {
-    class PodcastPlayer : IDisposable
+    class PodcastPlayer : IPodcastPlayer
     {
         private WaveOutEvent player;
         private Episode currentEpisode;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PluralsightWinFormsDemoApp.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,7 +7,7 @@ using System.Xml;
 
 namespace PluralsightWinFormsDemoApp.BusinessLogic
 {
-    class PodcastLoader
+    class PodcastLoader : IPodcastLoader
     {
         public PodcastLoader()
         {

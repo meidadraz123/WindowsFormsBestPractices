@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PluralsightWinFormsDemoApp.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Xml.Serialization;
 
 namespace PluralsightWinFormsDemoApp.BusinessLogic
 {
-    class SubscriptionManager
+    class SubscriptionManager : ISubscriptionManager
     {
         private readonly string podcastsSubscriptionFilePath;
 

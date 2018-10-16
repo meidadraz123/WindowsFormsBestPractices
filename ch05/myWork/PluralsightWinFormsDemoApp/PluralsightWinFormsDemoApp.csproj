@@ -47,13 +47,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLogic\MessageBoxDisplayService.cs" />
+    <Compile Include="BusinessLogic\NewSubscriptionService.cs" />
     <Compile Include="BusinessLogic\PodcastLoader.cs" />
     <Compile Include="BusinessLogic\PodcastPlayer.cs" />
-    <Compile Include="Episode.cs" />
-    <Compile Include="EpisodeView.cs">
+    <Compile Include="BusinessLogic\SettingsService.cs" />
+    <Compile Include="BusinessLogic\SystemInformationService.cs" />
+    <Compile Include="Model\Episode.cs" />
+    <Compile Include="Views\EpisodeView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="EpisodeView.Designer.cs">
+    <Compile Include="Views\EpisodeView.Designer.cs">
       <DependentUpon>EpisodeView.cs</DependentUpon>
     </Compile>
     <Compile Include="IconResources.Designer.cs">
@@ -61,33 +65,40 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>IconResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="IMessageBoxDisplayService.cs" />
+    <Compile Include="INewSubscriptionService.cs" />
+    <Compile Include="IPodcastLoader.cs" />
+    <Compile Include="IPodcastPlayer.cs" />
+    <Compile Include="ISettingsService.cs" />
+    <Compile Include="ISubscriptionManager.cs" />
+    <Compile Include="ISystemInformationService.cs" />
+    <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Views\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainFormPresenter.cs" />
-    <Compile Include="NewPodcastForm.cs">
+    <Compile Include="BusinessLogic\MainFormPresenter.cs" />
+    <Compile Include="Views\NewPodcastForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewPodcastForm.Designer.cs">
+    <Compile Include="Views\NewPodcastForm.Designer.cs">
       <DependentUpon>NewPodcastForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Podcast.cs" />
-    <Compile Include="PodcastView.cs">
+    <Compile Include="Model\Podcast.cs" />
+    <Compile Include="Views\PodcastView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PodcastView.Designer.cs">
+    <Compile Include="Views\PodcastView.Designer.cs">
       <DependentUpon>PodcastView.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BusinessLogic\SubscriptionManager.cs" />
-    <Compile Include="SubscriptionView.cs">
+    <Compile Include="Views\SubscriptionView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SubscriptionView.Designer.cs">
+    <Compile Include="Views\SubscriptionView.Designer.cs">
       <DependentUpon>SubscriptionView.cs</DependentUpon>
     </Compile>
     <Compile Include="TextResources.Designer.cs">
@@ -100,21 +111,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TextResources.fr.resx</DependentUpon>
     </Compile>
-    <Compile Include="ToolBarView.cs">
+    <Compile Include="Views\ToolBarView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ToolBarView.Designer.cs">
+    <Compile Include="Views\ToolBarView.Designer.cs">
       <DependentUpon>ToolBarView.cs</DependentUpon>
     </Compile>
     <Compile Include="XmlRssChannelNodeNotFoundException.cs" />
-    <EmbeddedResource Include="EpisodeView.en-GB.resx">
+    <EmbeddedResource Include="Views\EpisodeView.en-GB.resx">
       <DependentUpon>EpisodeView.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="EpisodeView.fr.resx">
+    <EmbeddedResource Include="Views\EpisodeView.fr.resx">
       <DependentUpon>EpisodeView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EpisodeView.resx">
+    <EmbeddedResource Include="Views\EpisodeView.resx">
       <DependentUpon>EpisodeView.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -122,13 +133,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>IconResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Views\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NewPodcastForm.resx">
+    <EmbeddedResource Include="Views\NewPodcastForm.resx">
       <DependentUpon>NewPodcastForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PodcastView.resx">
+    <EmbeddedResource Include="Views\PodcastView.resx">
       <DependentUpon>PodcastView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -141,7 +152,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="SubscriptionView.resx">
+    <EmbeddedResource Include="Views\SubscriptionView.resx">
       <DependentUpon>SubscriptionView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TextResources.fr.resx">
@@ -152,7 +163,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>TextResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ToolBarView.resx">
+    <EmbeddedResource Include="Views\ToolBarView.resx">
       <DependentUpon>ToolBarView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />

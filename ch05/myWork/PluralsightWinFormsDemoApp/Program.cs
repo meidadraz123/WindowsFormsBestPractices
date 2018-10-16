@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PluralsightWinFormsDemoApp.BusinessLogic;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -27,8 +28,25 @@ namespace PluralsightWinFormsDemoApp
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            var subscriptionManager = new SubscriptionManager("subscriptions.xml");
+            var podcastLoader = new PodcastLoader();
+            var podcastPlayer = new PodcastPlayer();
+            var messageBoxDisplayService = new MessageBoxDisplayService();
+            var settingsService = new SettingsService();
+            var systemInformationService = new SystemInformationService();
+            var newSubscriptionService = new NewSubscriptionService();
             var mainFormView = new MainForm();
-            var mainFormPresenter = new MainFormPresenter(mainFormView);
+
+            var mainFormPresenter = new MainFormPresenter(mainFormView,
+                podcastLoader, 
+                subscriptionManager,
+                podcastPlayer,
+                messageBoxDisplayService,
+                settingsService,
+                systemInformationService,
+                newSubscriptionService);
+
             Application.Run(mainFormView);
         }
 
