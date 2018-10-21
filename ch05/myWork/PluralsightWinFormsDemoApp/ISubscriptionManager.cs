@@ -5,8 +5,10 @@ namespace PluralsightWinFormsDemoApp
 {
     public interface ISubscriptionManager
     {
-        List<Podcast> LoadPodcasts();
-
-        void SavePodcasts(List<Podcast> podcasts);
+        void LoadPodcasts();
+        void SavePodcasts();
+        void AddPodcast(Podcast podcast);
+        void RemovePodcast(Podcast podcast);
+        IEnumerable<Podcast> Podcasts { get; }
     }
 }

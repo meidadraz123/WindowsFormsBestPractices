@@ -5,6 +5,6 @@ namespace PluralsightWinFormsDemoApp
 {
     public interface IPodcastLoader
     {
-        Task LoadPodcast(Podcast podcast);
+        Task UpdatePodcast(Podcast podcast);
     }
 }

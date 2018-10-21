@@ -14,7 +14,7 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
 
         }
 
-        public async Task LoadPodcast(Podcast podcast)
+        public async Task UpdatePodcast(Podcast podcast)
         {
             var r = new Random();
             await Task.Delay(r.Next(1000));

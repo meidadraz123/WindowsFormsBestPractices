@@ -1,5 +1,5 @@
-﻿using PluralsightWinFormsDemoApp.BusinessLogic;
-using PluralsightWinFormsDemoApp.Model;
+﻿using PluralsightWinFormsDemoApp.Model;
+using PluralsightWinFormsDemoApp.BusinessLogic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
+using PluralsightWinFormsDemoApp.Commands;
 
 namespace PluralsightWinFormsDemoApp.BusinessLogic
 {
@@ -18,15 +18,14 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
         private readonly IPodcastPlayer podcastPlayer;
         private readonly ISubscriptionManager subscriptionManager;
         private readonly IPodcastLoader podcastLoader;
-        private readonly List<Podcast> podcasts;
 
         private readonly ISubscriptionView subscriptionView;
         private readonly IEpisodeView episodeView;
-        private readonly IToolbarView toolbarView;
         private readonly IPodcastView podcastView;
         private readonly IMessageBoxDisplayService messageBoxDisplayService;
         private readonly ISettingsService settingsService;
         private readonly INewSubscriptionService newSubscriptionService;
+        private readonly IToolbarCommand[] commands;
 
         public MainFormPresenter( IMainFormView mainFormView,
             IPodcastLoader podcastLoader,
@@ -35,7 +34,8 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
             IMessageBoxDisplayService messageBoxDisplayService,
             ISettingsService settingsService,
             ISystemInformationService systemInformationService,
-            INewSubscriptionService newSubscriptionService)
+            INewSubscriptionService newSubscriptionService,
+            IToolbarCommand[] commands)
         {
             this.podcastPlayer = podcastPlayer;
             this.subscriptionManager = subscriptionManager;
@@ -43,11 +43,11 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
             this.messageBoxDisplayService = messageBoxDisplayService;
             this.settingsService = settingsService;
             this.newSubscriptionService = newSubscriptionService;
+            this.commands = commands;
 
 
             subscriptionView = mainFormView.SubscriptionView;
             episodeView = mainFormView.EpisodeView;
-            toolbarView = mainFormView.ToolbarView;
             podcastView = mainFormView.PodcastView;
 
             this.mainFormView = mainFormView;
@@ -55,14 +55,7 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
             mainFormView.FormClosed += MainFormViewOnFormClosed;
             mainFormView.HelpRequested += OnHelpRequested;
             mainFormView.KeyUp += MainFormViewOnKeyUp;
-
-            toolbarView.PlayClicked += OnButtonPlayClick;
-            toolbarView.StopClicked += OnButtonStopClick;
-            toolbarView.PauseClicked += OnButtonPauseClick;
-            toolbarView.AddPodcastClicked += OnButtonAddSubscriptionClick;
-            toolbarView.RemovePodcastClicked += OnButtonRemovePodcastClick;
-            toolbarView.EpisodeFavouriteChanged += OnButtonEpisodeFavouriteChanged;
-            toolbarView.SettingsClicked += OnButtonSettingsClick;
+            mainFormView.ToolbarView.SetCommands(commands);
 
             episodeView.Title = "";
             episodeView.Description = "";
@@ -72,34 +65,34 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
             {
                 mainFormView.BackColor = System.Drawing.Color.White;
             }
-            podcasts = subscriptionManager.LoadPodcasts();
+            subscriptionManager.LoadPodcasts();
         }
 
         private void MainFormViewOnKeyUp(object sender, System.Windows.Forms.KeyEventArgs keyEventArgs)
         {
-            if (subscriptionView.SelectedNode == null)
+            if (subscriptionView.SelectedNode != null && subscriptionView.SelectedNode.Tag is Episode)
             {
-                return;
-            }
-            if (keyEventArgs.KeyData == (Keys.Control | Keys.Space) && subscriptionView.SelectedNode.Tag is Episode )
-            {
-                OnButtonPlayClick(this, EventArgs.Empty);
-                keyEventArgs.Handled = true;
+                var command = commands.FirstOrDefault(c => keyEventArgs.KeyData == c.ShortcutKey);
+                if (command != null)
+                {
+                    command.Execute();
+                    keyEventArgs.Handled = true;
+                }
             }
         }
 
         private async void MainFormViewOnLoad(object sender, EventArgs eventArgs)
         {
-            foreach (var podcast in podcasts)
+            foreach (var podcast in subscriptionManager.Podcasts)
             {
-                var podcastLoadTask = Task.Run( () => podcastLoader.LoadPodcast(podcast));
+                var podcastLoadTask = Task.Run( () => podcastLoader.UpdatePodcast(podcast));
                 var firstFinished = await Task.WhenAny(podcastLoadTask, Task.Delay(5000));
                 if (firstFinished == podcastLoadTask)
                 {
-                    AddPodcastToTreeView(podcast);
-                    if (subscriptionView.SelectedNode == null)
+                    Utils.AddPodcastToSubscriptionView(subscriptionView, podcast);
+                    if (subscriptionView.SelectedNode == null && !subscriptionView.IsEmpty())
                     {
-                        SelectFirstEpisode();
+                        Utils.SelectFirstEpisode( subscriptionView, subscriptionManager);
                     } 
                 }
             }
@@ -117,13 +110,6 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
             messageBoxDisplayService.Show($"Help for {sender.ToString()}");
         }
 
-        private void OnButtonEpisodeFavouriteChanged(object sender, EventArgs e)
-        {
-            toolbarView.FavouriteImage = toolbarView.EpisodeIsFavourite ?
-                IconResources.star_icon_fill_32 :
-                IconResources.star_icon_32;
-        }
-
         private void OnSelectedEpisodeChanged(object sender, EventArgs e)
         {
             podcastPlayer.UnloadEpisode();
@@ -139,7 +125,6 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
                 episodeView.Title = currentEpisode.Title;
                 episodeView.PubDate = currentEpisode.PubDate;
                 episodeView.Description = currentEpisode.Description;
-                toolbarView.EpisodeIsFavourite = currentEpisode.IsFavourite;
                 currentEpisode.IsNew = false;
                 episodeView.Rating= currentEpisode.Rating;
                 episodeView.Tags= String.Join(",", currentEpisode.Tags ?? new string[0]);
@@ -158,7 +143,7 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
         private void MainFormViewOnFormClosed(object sender, System.Windows.Forms.FormClosedEventArgs formClosedEventArgs)
         {
             SaveEpisode();
-            subscriptionManager.SavePodcasts(podcasts);
+            subscriptionManager.SavePodcasts();
             podcastPlayer.Dispose();
         }
 
@@ -168,88 +153,7 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
 
             currentEpisode.Tags = episodeView.Tags.Split(new[] { ',' }).Select(s => s.Trim()).ToArray();
             currentEpisode.Rating = episodeView.Rating;
-            currentEpisode.IsFavourite = toolbarView.EpisodeIsFavourite;
             currentEpisode.Notes = episodeView.Notes;
-        }
-
-        private async void OnButtonPlayClick(object sender, EventArgs e)
-        {
-            await podcastPlayer.Play();
-        }
-
-        private void OnButtonRemovePodcastClick(object sender, EventArgs e)
-        {
-            if (subscriptionView.SelectedNode.Tag is Podcast podcast)
-            {
-                podcasts.Remove(podcast);
-                subscriptionView.RemoveNode(podcast.Id.ToString());
-                SelectFirstEpisode();
-            }
-
-            else if (subscriptionView.SelectedNode.Tag is Episode episode)
-            {
-                var relatedPodcast = podcasts.Where(p => p.Episodes.Where(ep => ep.Guid == episode.Guid).Any()).FirstOrDefault();
-                podcasts.Remove(relatedPodcast);
-                subscriptionView.RemoveNode(relatedPodcast.Id.ToString());
-                SelectFirstEpisode();
-            }
-        }
-
-        private async void OnButtonAddSubscriptionClick(object sender, EventArgs e)
-        {
-            var newPodcastUrl = newSubscriptionService.GetSubscriptionUrl();
-            if (newPodcastUrl != null)
-            {
-                var podcast = new Podcast() { SubscriptionUrl = newPodcastUrl };
-                try
-                {
-                    await podcastLoader.LoadPodcast(podcast);
-                    podcasts.Add(podcast);
-                    AddPodcastToTreeView(podcast);
-                }
-                catch (WebException)
-                {
-                    messageBoxDisplayService.Show("Sorry, that podcast could not be found. Please check the URL");
-                }
-                catch (XmlException)
-                {
-                    messageBoxDisplayService.Show("Sorry, the URL is not a podcast feed");
-                }
-                catch (XmlRssChannelNodeNotFoundException ex)
-                {
-                    messageBoxDisplayService.Show(ex.Message);
-                }
-            }
-        }
-
-        private void SelectFirstEpisode()
-        {
-            if (! subscriptionView.IsEmpty())
-                subscriptionView.SelectNode(podcasts.SelectMany(p => p.Episodes).First().Guid);
-        }
-
-        private void AddPodcastToTreeView(Podcast podcast)
-        {
-            var podcastNode = new TreeNode(podcast.Title) { Tag = podcast, Name = podcast.Id.ToString() };
-            foreach (var episode in podcast.Episodes)
-            {
-                podcastNode.Nodes.Add(new TreeNode(episode.Title) { Tag = episode, Name = episode.Guid });
-            }
-            subscriptionView.AddNode(podcastNode);
-        }
-
-        private void OnButtonStopClick(object sender, EventArgs e)
-        {
-            podcastPlayer.Stop();
-        }
-
-        private void OnButtonPauseClick(object sender, EventArgs e)
-        {
-            podcastPlayer.Pause();
-        }
-
-        private void OnButtonSettingsClick(object sender, EventArgs e)
-        {
         }
     }
 }

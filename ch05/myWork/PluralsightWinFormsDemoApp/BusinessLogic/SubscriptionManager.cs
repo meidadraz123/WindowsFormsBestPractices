@@ -12,15 +12,16 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
     class SubscriptionManager : ISubscriptionManager
     {
         private readonly string podcastsSubscriptionFilePath;
+        private List<Podcast> podcasts;
 
         public SubscriptionManager(string podcastsSubscriptionFilePath)
         {
             this.podcastsSubscriptionFilePath = podcastsSubscriptionFilePath;
+            LoadPodcasts();
         }
 
-        public List<Podcast> LoadPodcasts()
+        public void LoadPodcasts()
         {
-            List<Podcast> podcasts;
             if (File.Exists(podcastsSubscriptionFilePath))
             {
                 var serializer = new XmlSerializer(typeof(List<Podcast>));
@@ -41,16 +42,29 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
                 };
                 podcasts = defaultFeeds.Select(f => new Podcast() { SubscriptionUrl = f , Id = Guid.NewGuid()}).ToList();
             }
-            return podcasts;
         }
 
-        public void SavePodcasts(List<Podcast> podcasts)
+        public void SavePodcasts()
         {
             var serializer = new XmlSerializer(typeof(List<Podcast>));
             using (var s = File.Create(podcastsSubscriptionFilePath))
             {
-                serializer.Serialize(s, podcasts);
+                serializer.Serialize(s, Podcasts);
             }
         }
+
+        public void AddPodcast(Podcast podcast)
+        {
+            podcasts.Add(podcast);
+            SavePodcasts();
+        }
+
+        public void RemovePodcast(Podcast podcast)
+        {
+            podcasts.Remove(podcast);
+            SavePodcasts();
+        }
+
+        public IEnumerable<Podcast> Podcasts { get { return podcasts; } }
     }
 }

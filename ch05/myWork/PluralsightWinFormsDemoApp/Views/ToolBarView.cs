@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PluralsightWinFormsDemoApp.Commands;
 
 namespace PluralsightWinFormsDemoApp
 {
@@ -17,71 +18,32 @@ namespace PluralsightWinFormsDemoApp
             InitializeComponent();
         }
 
-        public Image FavouriteImage
+        public void SetCommands(IToolbarCommand[] commands)
         {
-            set { toolStripButtonFavourite.Image = value; }
-        }
-
-        public bool EpisodeIsFavourite
-        {
-            get { return toolStripButtonFavourite.Checked; }
-            set { toolStripButtonFavourite.Checked = value; }
-        }
-
-        public event EventHandler StopClicked
-        {
-            add { toolStripButtonStop.Click += value; }
-            remove { toolStripButtonStop.Click -= value; }
-        }
-
-        public event EventHandler PauseClicked
-        {
-            add { toolStripButtonPause.Click += value; }
-            remove { toolStripButtonPause.Click -= value; }
-        }
-
-        public event EventHandler PlayClicked
-        {
-            add { toolStripButtonPlay.Click += value; }
-            remove { toolStripButtonPlay.Click -= value; }
-        }
-
-        public event EventHandler AddPodcastClicked
-        {
-            add { toolStripButtonAddSubscription.Click += value; }
-            remove { toolStripButtonAddSubscription.Click -= value; }
-        }
-
-        public event EventHandler RemovePodcastClicked
-        {
-            add { toolStripButtonRemoveSubscription.Click += value; }
-            remove { toolStripButtonRemoveSubscription.Click -= value; }
-        }
-        public event EventHandler EpisodeFavouriteChanged
-        {
-            add { toolStripButtonFavourite.CheckStateChanged += value; }
-            remove { toolStripButtonFavourite.CheckStateChanged -= value; }
-        }
-
-        public event EventHandler SettingsClicked
-        {
-            add { toolStripButtonSettings.Click += value; }
-            remove { toolStripButtonSettings.Click -= value; }
+            toolStripMainForm.Items.Clear();
+            foreach (var command in commands)
+            {
+                var button = new ToolStripButton(command.ToolTip, command.Icon, (o, s) => command.Execute())
+                {
+                    Enabled = command.IsEnabled,
+                    ImageScaling = ToolStripItemImageScaling.None,
+                    DisplayStyle = ToolStripItemDisplayStyle.Image,
+                    Tag = command.ShortcutKey
+                };
+                var c = command; // create a closure around the command
+                command.PropertyChanged += (o, s) =>
+                {
+                    button.Text = c.ToolTip;
+                    button.Image = c.Icon;
+                    button.Enabled = c.IsEnabled;
+                };
+                toolStripMainForm.Items.Add(button);
+            }
         }
     }
 
     public interface IToolbarView
     {
-        event EventHandler StopClicked;
-        event EventHandler PauseClicked;
-        event EventHandler PlayClicked;
-        event EventHandler AddPodcastClicked;
-        event EventHandler RemovePodcastClicked;
-        event EventHandler EpisodeFavouriteChanged;
-        event EventHandler SettingsClicked;
-
-        Image FavouriteImage { set; }
-
-        bool EpisodeIsFavourite { get; set; }
+        void SetCommands(IToolbarCommand[] commands);
     }
 }

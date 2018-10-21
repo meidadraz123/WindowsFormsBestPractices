@@ -1,4 +1,5 @@
 ﻿using PluralsightWinFormsDemoApp.BusinessLogic;
+using PluralsightWinFormsDemoApp.Commands;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -38,6 +39,17 @@ namespace PluralsightWinFormsDemoApp
             var newSubscriptionService = new NewSubscriptionService();
             var mainFormView = new MainForm();
 
+            var commands = new IToolbarCommand[]
+                {
+                    new AddSubscriptionCommand(mainFormView.SubscriptionView, messageBoxDisplayService,newSubscriptionService,podcastLoader,subscriptionManager),
+                    new RemoveSubscriptionCommand(mainFormView.SubscriptionView,subscriptionManager),
+                    new PlayCommand(podcastPlayer),
+                    new PauseCommand(podcastPlayer),
+                    new StopCommand(podcastPlayer),
+                    new FavouriteCommand(mainFormView.SubscriptionView),
+                    new SettingsCommand()
+            };
+
             var mainFormPresenter = new MainFormPresenter(mainFormView,
                 podcastLoader, 
                 subscriptionManager,
@@ -45,7 +57,8 @@ namespace PluralsightWinFormsDemoApp
                 messageBoxDisplayService,
                 settingsService,
                 systemInformationService,
-                newSubscriptionService);
+                newSubscriptionService,
+                commands);
 
             Application.Run(mainFormView);
         }

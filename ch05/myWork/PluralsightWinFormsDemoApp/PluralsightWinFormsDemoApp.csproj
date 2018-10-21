@@ -47,13 +47,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\AddSubscriptionCommand.cs" />
     <Compile Include="BusinessLogic\MessageBoxDisplayService.cs" />
     <Compile Include="BusinessLogic\NewSubscriptionService.cs" />
     <Compile Include="BusinessLogic\PodcastLoader.cs" />
     <Compile Include="BusinessLogic\PodcastPlayer.cs" />
     <Compile Include="BusinessLogic\SettingsService.cs" />
     <Compile Include="BusinessLogic\SystemInformationService.cs" />
+    <Compile Include="Commands\CommandBase.cs" />
+    <Compile Include="Commands\FavouriteCommand.cs" />
+    <Compile Include="Commands\IToolbarCommand.cs" />
     <Compile Include="Model\Episode.cs" />
+    <Compile Include="Commands\PauseCommand.cs" />
+    <Compile Include="Commands\PlayCommand.cs" />
+    <Compile Include="Commands\RemoveSubscriptionCommand.cs" />
+    <Compile Include="Commands\SettingsCommand.cs" />
+    <Compile Include="Commands\StopCommand.cs" />
+    <Compile Include="BusinessLogic\Utils.cs" />
     <Compile Include="Views\EpisodeView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -207,6 +217,7 @@
   <ItemGroup>
     <None Include="Resources\stop-icon-32.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
