@@ -57,7 +57,6 @@ namespace PluralsightWinFormsDemoApp
                 messageBoxDisplayService,
                 settingsService,
                 systemInformationService,
-                newSubscriptionService,
                 commands);
 
             Application.Run(mainFormView);

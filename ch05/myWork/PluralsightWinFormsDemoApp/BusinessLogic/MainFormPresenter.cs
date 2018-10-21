@@ -24,7 +24,6 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
         private readonly IPodcastView podcastView;
         private readonly IMessageBoxDisplayService messageBoxDisplayService;
         private readonly ISettingsService settingsService;
-        private readonly INewSubscriptionService newSubscriptionService;
         private readonly IToolbarCommand[] commands;
 
         public MainFormPresenter( IMainFormView mainFormView,
@@ -34,7 +33,6 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
             IMessageBoxDisplayService messageBoxDisplayService,
             ISettingsService settingsService,
             ISystemInformationService systemInformationService,
-            INewSubscriptionService newSubscriptionService,
             IToolbarCommand[] commands)
         {
             this.podcastPlayer = podcastPlayer;
@@ -42,7 +40,6 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
             this.podcastLoader = podcastLoader;
             this.messageBoxDisplayService = messageBoxDisplayService;
             this.settingsService = settingsService;
-            this.newSubscriptionService = newSubscriptionService;
             this.commands = commands;
 
 
