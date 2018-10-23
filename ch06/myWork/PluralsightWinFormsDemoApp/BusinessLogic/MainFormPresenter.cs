@@ -25,6 +25,7 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
         private readonly IMessageBoxDisplayService messageBoxDisplayService;
         private readonly ISettingsService settingsService;
         private readonly IToolbarCommand[] commands;
+        private readonly Timer timer;
 
         public MainFormPresenter( IMainFormView mainFormView,
             IPodcastLoader podcastLoader,
@@ -54,6 +55,11 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
             mainFormView.KeyUp += MainFormViewOnKeyUp;
             mainFormView.ToolbarView.SetCommands(commands);
 
+            timer = new Timer();
+            timer.Interval = 100;
+            timer.Tick += TimerOnTick;
+            timer.Start();
+
             episodeView.Title = "";
             episodeView.Description = "";
             episodeView.PubDate= "";
@@ -63,6 +69,16 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
                 mainFormView.BackColor = System.Drawing.Color.White;
             }
             subscriptionManager.LoadPodcasts();
+        }
+
+
+
+        private void TimerOnTick(object sender, EventArgs eventArgs)
+        {
+            if (podcastPlayer.IsPlaying)
+            {
+                episodeView.PositionInSeconds = podcastPlayer.PositionInSeconds;
+            }
         }
 
         private void MainFormViewOnKeyUp(object sender, System.Windows.Forms.KeyEventArgs keyEventArgs)

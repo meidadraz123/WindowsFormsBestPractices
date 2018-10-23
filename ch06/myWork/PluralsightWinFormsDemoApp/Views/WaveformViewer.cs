@@ -15,12 +15,14 @@ namespace PluralsightWinFormsDemoApp.Views
         private float[] peaks;
         private Brush backBrush;
         private Pen waveformPen;
+        private int positionInSeconds;
 
         public WaveformViewer()
         {
             InitializeComponent();
             DoubleBuffered = true;
             hScrollBar1.Scroll += HScrollBar1_Scroll;
+            PositionInSeconds = 0;
         }
 
         private void HScrollBar1_Scroll(object sender, ScrollEventArgs e)
@@ -51,6 +53,22 @@ namespace PluralsightWinFormsDemoApp.Views
             }
         }
 
+        public int PositionInSeconds
+        {
+            get { return positionInSeconds; }
+            set
+            {
+                if (positionInSeconds != value)
+                {
+                    positionInSeconds = value;
+                    Invalidate();
+                }
+            }
+        }
+
+        private static readonly Pen positionPen = new Pen(Color.FromArgb(80, 80, 80), 2);
+        private static readonly Brush positionBrush = new SolidBrush(Color.FromArgb(229, 215, 200));
+
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -70,6 +88,18 @@ namespace PluralsightWinFormsDemoApp.Views
                     e.Graphics.DrawLine(waveformPen, xx, top, xx, top + height);
                 }
             }
+
+            var positionX = PositionInSeconds - hScrollBar1.Value;
+            e.Graphics.DrawLine(positionPen, positionX, 0, positionX, Height);
+
+            var timeString = TimeSpan.FromSeconds(PositionInSeconds).ToString(@"hh\:mm\:ss");
+            var timeStringRect = e.Graphics.MeasureString(timeString, Font);
+            var timeRect = new Rectangle(positionX, 1, (int)timeStringRect.Width + 6, 15);
+
+            e.Graphics.FillRectangle(positionBrush, timeRect);
+            e.Graphics.DrawRectangle(positionPen, timeRect);
+            timeRect.Inflate(-2, -2);
+            e.Graphics.DrawString(timeString, Font, Brushes.Black, timeRect);
         }
     }
 }

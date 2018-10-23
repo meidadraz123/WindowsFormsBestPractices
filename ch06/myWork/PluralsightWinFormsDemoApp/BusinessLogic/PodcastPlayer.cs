@@ -14,6 +14,7 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
     {
         private WaveOutEvent player;
         private Episode currentEpisode;
+        private MediaFoundationReader currentReader;
 
         public PodcastPlayer()
         {
@@ -22,10 +23,7 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
 
         public void Dispose()
         {
-            if (player != null)
-            {
-                player.Dispose();
-            }
+            UnloadEpisode();
         }
 
         public void LoadEpisode(Episode selectedEpisode)
@@ -35,7 +33,14 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
 
         public void UnloadEpisode()
         {
-            Dispose();
+            if (player != null)
+            {
+                player.Dispose();
+            }
+            if (currentReader != null)
+            {
+                currentReader.Dispose();
+            }
             currentEpisode = null;
             player = null;
         }
@@ -58,7 +63,8 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
                 try
                 {
                     player = new WaveOutEvent();
-                    await Task.Run(() => player.Init(new MediaFoundationReader(currentEpisode.AudioFile)));
+                    currentReader = new MediaFoundationReader(currentEpisode.AudioFile);
+                    await Task.Run(() => player.Init(currentReader));
 
                 }
                 catch (Exception ex)
@@ -113,6 +119,29 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
                 return peaks.ToArray();
             });
         }
-            
+
+        private int positionInSeconds;
+
+        public int PositionInSeconds
+        {
+            get
+            {
+                if (currentReader != null)
+                {
+                    positionInSeconds = (int)currentReader.CurrentTime.TotalSeconds;
+                }
+                return positionInSeconds;
+            }
+            set
+            {
+                positionInSeconds = value;
+                if (currentReader != null)
+                {
+                    currentReader.CurrentTime = TimeSpan.FromSeconds(value);
+                }
+            }
+        }
+
+        public bool IsPlaying { get { return player != null && player.PlaybackState == PlaybackState.Playing; } }
     }
 }

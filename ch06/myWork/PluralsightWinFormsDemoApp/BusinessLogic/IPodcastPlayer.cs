@@ -12,5 +12,7 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
         void Stop();
         void Pause();
         Task<float[]> LoadPodcastAsync();
+        int PositionInSeconds { get; set; }
+        bool IsPlaying { get; }
     }
 }
