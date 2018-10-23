@@ -124,6 +124,7 @@
             // 
             resources.ApplyResources(this.waveformViewer1, "waveformViewer1");
             this.waveformViewer1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.waveformViewer1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
             this.waveformViewer1.Name = "waveformViewer1";
             // 
             // EpisodeView

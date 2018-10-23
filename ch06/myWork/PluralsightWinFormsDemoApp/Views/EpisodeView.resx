@@ -123,10 +123,10 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="waveformViewer1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 268</value>
+    <value>4, 231</value>
   </data>
   <data name="waveformViewer1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>466, 106</value>
+    <value>466, 143</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="waveformViewer1.TabIndex" type="System.Int32, mscorlib">
@@ -168,6 +168,9 @@
   <data name="labelMyNotes.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="labelMyNotes.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="labelMyNotes.Location" type="System.Drawing.Point, System.Drawing">
     <value>10, 59</value>
   </data>
@@ -195,6 +198,9 @@
   <data name="labelMyRating.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="labelMyRating.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="labelMyRating.Location" type="System.Drawing.Point, System.Drawing">
     <value>10, 32</value>
   </data>
@@ -221,6 +227,9 @@
   </data>
   <data name="labelMyTags.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="labelMyTags.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="labelMyTags.Location" type="System.Drawing.Point, System.Drawing">
     <value>10, 3</value>
@@ -256,7 +265,7 @@
     <value>True</value>
   </data>
   <data name="textBoxMyNotes.Size" type="System.Drawing.Size, System.Drawing">
-    <value>468, 177</value>
+    <value>468, 141</value>
   </data>
   <data name="textBoxMyNotes.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -333,6 +342,9 @@
   <data name="labelEpisodeTitle.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 15.75pt</value>
   </data>
+  <data name="labelEpisodeTitle.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="labelEpisodeTitle.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 0</value>
   </data>
@@ -366,6 +378,9 @@
   <data name="labelPublicationDate.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt, style=Italic</value>
   </data>
+  <data name="labelPublicationDate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="labelPublicationDate.Location" type="System.Drawing.Point, System.Drawing">
     <value>32, 25</value>
   </data>
@@ -395,6 +410,9 @@
   </data>
   <data name="labelDescription.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="labelDescription.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="labelDescription.Location" type="System.Drawing.Point, System.Drawing">
     <value>32, 38</value>
