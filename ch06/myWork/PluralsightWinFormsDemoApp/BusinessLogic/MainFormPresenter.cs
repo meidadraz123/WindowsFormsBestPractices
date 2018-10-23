@@ -71,6 +71,13 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
             subscriptionManager.LoadPodcasts();
 
             episodeView.PositionChanged += (s, a) => podcastPlayer.PositionInSeconds = episodeView.PositionInSeconds;
+            episodeView.NoteCreated += EpisodeViewOnNoteCreated;
+        }
+
+        private void EpisodeViewOnNoteCreated(object sender, NoteArgs noteArgs)
+        {
+            currentEpisode.Notes = String.Format(episodeView.Notes + $"{noteArgs.Position:hh\\:mm\\:ss}: {noteArgs.Note}\r\n");
+            episodeView.Notes = currentEpisode.Notes;
         }
 
         private void TimerOnTick(object sender, EventArgs eventArgs)
