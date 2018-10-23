@@ -16,6 +16,7 @@ namespace PluralsightWinFormsDemoApp.Views
         private Brush backBrush;
         private Pen waveformPen;
         private int positionInSeconds;
+        private bool isDragging;
 
         public WaveformViewer()
         {
@@ -24,6 +25,55 @@ namespace PluralsightWinFormsDemoApp.Views
             hScrollBar1.Scroll += HScrollBar1_Scroll;
             PositionInSeconds = 0;
             this.MouseClick += OnMouseClick;
+            this.MouseMove += OnMouseMove;
+            this.MouseDown += OnMouseDown;
+            this.MouseUp += OnMouseUp;
+        }
+
+        public bool IsDragging
+        {
+            get { return isDragging; }
+        }
+
+        private void OnMouseUp(object sender, MouseEventArgs mouseEventArgs)
+        {
+            if (mouseEventArgs.Button == MouseButtons.Left && isDragging)
+            {
+                isDragging = false;
+                Cursor = Cursors.Default;
+                OnPositionChanged();
+            }
+        }
+
+        private void OnMouseDown(object sender, MouseEventArgs mouseEventArgs)
+        {
+            if (mouseEventArgs.Button == MouseButtons.Left && Cursor == Cursors.SizeWE)
+            {
+                isDragging = true;
+            }
+        }
+
+        private void OnMouseMove(object sender, MouseEventArgs mouseEventArgs)
+        {
+            if (mouseEventArgs.X >= 0 && mouseEventArgs.X <= Width) // handle only when the mouse is over the control horizontally
+            {
+                var hoverPosition = mouseEventArgs.X + hScrollBar1.Value;
+                if (!isDragging)
+                {
+                    if (Math.Abs(positionInSeconds - hoverPosition) < 5)
+                    {
+                        Cursor = Cursors.SizeWE;
+                    }
+                    else
+                    {
+                        Cursor = Cursors.Default;
+                    }
+                }
+                else
+                {
+                    PositionInSeconds = hoverPosition;
+                }
+            }
         }
 
         private void OnMouseClick(object sender, MouseEventArgs mouseEventArgs)

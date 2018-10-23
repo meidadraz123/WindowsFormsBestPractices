@@ -78,7 +78,13 @@ namespace PluralsightWinFormsDemoApp
         public int PositionInSeconds
         {
             get { return waveformViewer1.PositionInSeconds; }
-            set { waveformViewer1.PositionInSeconds = value;}
+            set
+            {
+                if (! waveformViewer1.IsDragging)
+                {
+                    waveformViewer1.PositionInSeconds = value;
+                }
+            }
         }
 
         public void SetPeaks(float[] newPeaks)
