@@ -1,4 +1,4 @@
-﻿namespace PluralsightWinFormsDemoApp
+﻿namespace PluralsightWinFormsDemoApp.BusinessLogic
 {
     public interface INewSubscriptionService
     {

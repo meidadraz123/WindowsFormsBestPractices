@@ -116,6 +116,7 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
             }
             if (subscriptionView.SelectedNode.Tag is Episode selectedEpisode)
             {
+                EventAggregator.Instance.Publish(new EpisodeSelectedMessage(selectedEpisode));
                 mainFormView.ShowEpisodeView();
                 SaveEpisode();
                 currentEpisode = selectedEpisode;
@@ -131,6 +132,7 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
 
             if (subscriptionView.SelectedNode.Tag is Podcast selectedPodcast)
             {
+                EventAggregator.Instance.Publish(new PodcastSelectedMessage(selectedPodcast));
                 mainFormView.ShowPodcastView();
                 podcastView.SetPodcastTitle(selectedPodcast.Title);
                 podcastView.SetEpisodeCount($"{selectedPodcast.Episodes.Count} episodes");

@@ -1,7 +1,7 @@
 ﻿using PluralsightWinFormsDemoApp.Model;
 using System.Threading.Tasks;
 
-namespace PluralsightWinFormsDemoApp
+namespace PluralsightWinFormsDemoApp.BusinessLogic
 {
     public interface IPodcastLoader
     {

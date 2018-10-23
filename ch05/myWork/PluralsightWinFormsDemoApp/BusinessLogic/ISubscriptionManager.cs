@@ -1,7 +1,7 @@
 ﻿using PluralsightWinFormsDemoApp.Model;
 using System.Collections.Generic;
 
-namespace PluralsightWinFormsDemoApp
+namespace PluralsightWinFormsDemoApp.BusinessLogic
 {
     public interface ISubscriptionManager
     {

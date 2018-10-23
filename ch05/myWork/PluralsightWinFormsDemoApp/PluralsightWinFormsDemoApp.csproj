@@ -47,6 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLogic\EpisodeSelectedMessage.cs" />
+    <Compile Include="BusinessLogic\EventAggregator.cs" />
     <Compile Include="Commands\AddSubscriptionCommand.cs" />
     <Compile Include="BusinessLogic\MessageBoxDisplayService.cs" />
     <Compile Include="BusinessLogic\NewSubscriptionService.cs" />
@@ -75,13 +77,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>IconResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="IMessageBoxDisplayService.cs" />
-    <Compile Include="INewSubscriptionService.cs" />
-    <Compile Include="IPodcastLoader.cs" />
-    <Compile Include="IPodcastPlayer.cs" />
-    <Compile Include="ISettingsService.cs" />
-    <Compile Include="ISubscriptionManager.cs" />
-    <Compile Include="ISystemInformationService.cs" />
+    <Compile Include="BusinessLogic\IMessageBoxDisplayService.cs" />
+    <Compile Include="BusinessLogic\INewSubscriptionService.cs" />
+    <Compile Include="BusinessLogic\IPodcastLoader.cs" />
+    <Compile Include="BusinessLogic\IPodcastPlayer.cs" />
+    <Compile Include="BusinessLogic\ISettingsService.cs" />
+    <Compile Include="BusinessLogic\ISubscriptionManager.cs" />
+    <Compile Include="BusinessLogic\ISystemInformationService.cs" />
     <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

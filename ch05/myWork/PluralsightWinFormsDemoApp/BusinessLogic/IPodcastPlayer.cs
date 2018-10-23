@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace PluralsightWinFormsDemoApp
+namespace PluralsightWinFormsDemoApp.BusinessLogic
 {
     public interface IPodcastPlayer : IDisposable
     {

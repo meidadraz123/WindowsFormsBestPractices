@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PluralsightWinFormsDemoApp.BusinessLogic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,10 +18,15 @@ namespace PluralsightWinFormsDemoApp.Commands
             Icon = IconResources.play_icon_32;
             ToolTip = "Play";
             ShortcutKey = Keys.Space | Keys.Control;
+            IsEnabled = false;
+            EventAggregator.Instance.Subscribe<EpisodeSelectedMessage>(m => IsEnabled = true);
+            EventAggregator.Instance.Subscribe<PodcastSelectedMessage>(m => IsEnabled = false);
         }
         public override void Execute()
         {
             player.Play();
         }
+
+
     }
 }
