@@ -69,6 +69,8 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
                 mainFormView.BackColor = System.Drawing.Color.White;
             }
             subscriptionManager.LoadPodcasts();
+
+            episodeView.PositionChanged += (s, a) => podcastPlayer.PositionInSeconds = episodeView.PositionInSeconds;
         }
 
 

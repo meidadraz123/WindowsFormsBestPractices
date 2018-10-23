@@ -90,6 +90,12 @@ namespace PluralsightWinFormsDemoApp
         {
             MessageBox.Show(TextResources.TagsHelp);
         }
+
+        public event EventHandler PositionChanged
+        {
+            add { waveformViewer1.PositionChanged += value; }
+            remove { waveformViewer1.PositionChanged -= value; }
+        }
     }
 
     public interface IEpisodeView
@@ -102,5 +108,6 @@ namespace PluralsightWinFormsDemoApp
         int Rating { get; set; }
         void SetPeaks(float[] newPeaks);
         int PositionInSeconds { get; set; }
+        event EventHandler PositionChanged;
     }
 }

@@ -23,6 +23,24 @@ namespace PluralsightWinFormsDemoApp.Views
             DoubleBuffered = true;
             hScrollBar1.Scroll += HScrollBar1_Scroll;
             PositionInSeconds = 0;
+            this.MouseClick += OnMouseClick;
+        }
+
+        private void OnMouseClick(object sender, MouseEventArgs mouseEventArgs)
+        {
+            if (mouseEventArgs.Button == MouseButtons.Left)
+            {
+                var desiredPosition = mouseEventArgs.X + hScrollBar1.Value;
+                PositionInSeconds = desiredPosition;
+                OnPositionChanged();
+            }
+        }
+
+        public event EventHandler PositionChanged;
+
+        protected virtual void OnPositionChanged()
+        {
+            PositionChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private void HScrollBar1_Scroll(object sender, ScrollEventArgs e)
