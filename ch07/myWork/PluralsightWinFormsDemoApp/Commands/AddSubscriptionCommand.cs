@@ -2,6 +2,7 @@
 using PluralsightWinFormsDemoApp.BusinessLogic;
 using System.Net;
 using System.Xml;
+using PluralsightWinFormsDemoApp.Views;
 
 namespace PluralsightWinFormsDemoApp.Commands
 {

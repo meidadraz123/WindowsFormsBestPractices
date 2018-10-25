@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PluralsightWinFormsDemoApp
+namespace PluralsightWinFormsDemoApp.Views
 {
     public partial class EpisodeView : UserControl, IEpisodeView
     {
@@ -27,7 +27,7 @@ namespace PluralsightWinFormsDemoApp
             }
         }
 
-        public string PubDate
+        public string PublicationDate
         {
             set
             {
@@ -113,7 +113,7 @@ namespace PluralsightWinFormsDemoApp
     public interface IEpisodeView
     {
         string Title { set; }
-        string PubDate { set; }
+        string PublicationDate { set; }
         string Description { set; }
         string Tags { get; set; }
         string Notes { get; set; }

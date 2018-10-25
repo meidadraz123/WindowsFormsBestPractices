@@ -35,8 +35,11 @@
     <Reference Include="NAudio, Version=1.8.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NAudio.1.8.4\lib\net35\NAudio.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,6 +48,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogic\EpisodeSelectedMessage.cs" />
@@ -141,6 +147,14 @@
     <Compile Include="Views\WaveformViewer.Designer.cs">
       <DependentUpon>WaveformViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\WpfEpisodeView.xaml.cs" />
+    <Compile Include="Views\WpfEpisodeViewHost.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\WpfEpisodeViewHost.Designer.cs">
+      <DependentUpon>WpfEpisodeViewHost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WpfWaveformControl.xaml.cs" />
     <Compile Include="XmlRssChannelNodeNotFoundException.cs" />
     <EmbeddedResource Include="Views\EpisodeView.en-GB.resx">
       <DependentUpon>EpisodeView.cs</DependentUpon>
@@ -196,6 +210,9 @@
     <EmbeddedResource Include="Views\WaveformViewer.resx">
       <DependentUpon>WaveformViewer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\WpfEpisodeViewHost.resx">
+      <DependentUpon>WpfEpisodeViewHost.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -237,7 +254,16 @@
   <ItemGroup>
     <None Include="Resources\stop-icon-32.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="Views\WpfEpisodeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WpfWaveformControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

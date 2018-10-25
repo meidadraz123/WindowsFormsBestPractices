@@ -1,6 +1,6 @@
 ﻿namespace PluralsightWinFormsDemoApp.Views
 {
-    partial class SubscriptionView
+    partial class WpfEpisodeViewHost
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,31 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.treeViewPodcasts = new System.Windows.Forms.TreeView();
+            this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
+            this.wpfEpisodeView1 = new PluralsightWinFormsDemoApp.Views.WpfEpisodeView();
             this.SuspendLayout();
             // 
-            // treeViewPodcasts
+            // elementHost1
             // 
-            this.treeViewPodcasts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.treeViewPodcasts.Location = new System.Drawing.Point(0, 0);
-            this.treeViewPodcasts.Name = "treeViewPodcasts";
-            this.treeViewPodcasts.Size = new System.Drawing.Size(242, 487);
-            this.treeViewPodcasts.TabIndex = 1;
+            this.elementHost1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.elementHost1.Location = new System.Drawing.Point(0, 0);
+            this.elementHost1.Name = "elementHost1";
+            this.elementHost1.Size = new System.Drawing.Size(373, 606);
+            this.elementHost1.TabIndex = 0;
+            this.elementHost1.Text = "elementHost1";
+            this.elementHost1.Child = this.wpfEpisodeView1;
             // 
-            // SubscriptionView
+            // WpfEpisodeViewHost
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.treeViewPodcasts);
-            this.Name = "SubscriptionView";
-            this.Size = new System.Drawing.Size(242, 487);
+            this.Controls.Add(this.elementHost1);
+            this.Name = "WpfEpisodeViewHost";
+            this.Size = new System.Drawing.Size(373, 606);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        public System.Windows.Forms.TreeView treeViewPodcasts;
+
+        private System.Windows.Forms.Integration.ElementHost elementHost1;
+        private WpfEpisodeView wpfEpisodeView1;
     }
 }

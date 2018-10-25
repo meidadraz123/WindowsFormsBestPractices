@@ -1,5 +1,6 @@
 ﻿using PluralsightWinFormsDemoApp.BusinessLogic;
 using PluralsightWinFormsDemoApp.Commands;
+using PluralsightWinFormsDemoApp.Views;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

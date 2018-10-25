@@ -1,4 +1,5 @@
 ﻿using PluralsightWinFormsDemoApp.Model;
+using PluralsightWinFormsDemoApp.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;

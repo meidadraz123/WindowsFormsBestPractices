@@ -1,4 +1,4 @@
-﻿namespace PluralsightWinFormsDemoApp
+﻿namespace PluralsightWinFormsDemoApp.Views
 {
     partial class MainForm
     {
@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.splitContainerMainForm = new System.Windows.Forms.SplitContainer();
-            this.toolBarView = new PluralsightWinFormsDemoApp.ToolBarView();
+            this.toolBarView = new PluralsightWinFormsDemoApp.Views.ToolBarView();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMainForm)).BeginInit();
             this.splitContainerMainForm.SuspendLayout();
             this.SuspendLayout();

@@ -2,11 +2,11 @@
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace PluralsightWinFormsDemoApp
+namespace PluralsightWinFormsDemoApp.Views
 {
     public partial class MainForm : Form, IMainFormView
     {
-        private readonly EpisodeView episodeView;
+        private readonly WpfEpisodeViewHost episodeView;
         private readonly PodcastView podcastView;
         private readonly SubscriptionView subscriptionView;
 
@@ -21,7 +21,7 @@ namespace PluralsightWinFormsDemoApp
         public MainForm()
         {
             InitializeComponent();
-            episodeView = new EpisodeView() { Dock = DockStyle.Fill };
+            episodeView = new WpfEpisodeViewHost() { Dock = DockStyle.Fill };
             podcastView = new PodcastView() { Dock = DockStyle.Fill };
             subscriptionView = new SubscriptionView() { Dock = DockStyle.Fill };
             splitContainerMainForm.Panel1.Controls.Add(subscriptionView);

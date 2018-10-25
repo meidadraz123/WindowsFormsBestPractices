@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PluralsightWinFormsDemoApp.Commands;
+using PluralsightWinFormsDemoApp.Views;
 
 namespace PluralsightWinFormsDemoApp.BusinessLogic
 {
@@ -61,8 +62,7 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
             timer.Start();
 
             episodeView.Title = "";
-            episodeView.Description = "";
-            episodeView.PubDate= "";
+            episodeView.PublicationDate= "";
             subscriptionView.SelectionChanged += OnSelectedEpisodeChanged;
             if (! systemInformationService.IsHighContrastColourScheme)
             {
@@ -144,7 +144,7 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
                 SaveEpisode();
                 currentEpisode = selectedEpisode;
                 episodeView.Title = currentEpisode.Title;
-                episodeView.PubDate = currentEpisode.PubDate;
+                episodeView.PublicationDate = currentEpisode.PubDate;
                 episodeView.Description = currentEpisode.Description;
                 currentEpisode.IsNew = false;
                 episodeView.Rating= currentEpisode.Rating;
