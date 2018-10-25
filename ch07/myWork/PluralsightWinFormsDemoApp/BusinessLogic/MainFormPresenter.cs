@@ -82,7 +82,7 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
 
         private void TimerOnTick(object sender, EventArgs eventArgs)
         {
-            if (podcastPlayer.IsPlaying)
+            if (podcastPlayer != null && podcastPlayer.IsPlaying)
             {
                 episodeView.PositionInSeconds = podcastPlayer.PositionInSeconds;
             }
