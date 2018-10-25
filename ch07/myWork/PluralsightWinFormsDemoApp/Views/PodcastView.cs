@@ -31,6 +31,15 @@ namespace PluralsightWinFormsDemoApp
         {
             webBrowser1.Navigate(url);
         }
+
+        private void WebBrowserOnDocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs webBrowserDocumentCompletedEventArgs)
+        {
+            foreach (var link in webBrowser1.Document.All.Cast<HtmlElement>().Where(e => e.TagName == "A"))
+            {
+                link.InnerText = "Pluralsight";
+                link.SetAttribute("href", "http://pluralsight.com");
+            }
+        }
     }
 
     public interface IPodcastView

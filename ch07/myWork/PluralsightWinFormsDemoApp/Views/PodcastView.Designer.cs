@@ -64,6 +64,7 @@
             this.webBrowser1.ScriptErrorsSuppressed = true;
             this.webBrowser1.Size = new System.Drawing.Size(467, 381);
             this.webBrowser1.TabIndex = 2;
+            this.webBrowser1.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.WebBrowserOnDocumentCompleted);
             // 
             // PodcastView
             // 
