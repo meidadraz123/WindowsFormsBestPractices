@@ -100,6 +100,10 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
         {
             return Task.Run(() =>
             {
+                if (currentEpisode == null)
+                {
+                    return null;
+                }
                 var peaks = new List<float>();
                 using (var reader = new MediaFoundationReader(currentEpisode.AudioFile))
                 {

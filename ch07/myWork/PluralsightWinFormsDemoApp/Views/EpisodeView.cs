@@ -38,7 +38,7 @@ namespace PluralsightWinFormsDemoApp
         {
             set
             {
-                labelDescription.Text = value;
+                webBrowserEpisodeDescription.DocumentText = value;
             }
         }
         public string Tags

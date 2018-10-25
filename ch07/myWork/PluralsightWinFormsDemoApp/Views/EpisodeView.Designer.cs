@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EpisodeView));
             this.panelEpisodeEditableInfo = new System.Windows.Forms.Panel();
+            this.webBrowserEpisodeDescription = new System.Windows.Forms.WebBrowser();
             this.numericUpDownMyRating = new System.Windows.Forms.NumericUpDown();
             this.labelMyNotes = new System.Windows.Forms.Label();
             this.labelMyRating = new System.Windows.Forms.Label();
@@ -40,7 +41,6 @@
             this.flowLayoutPanelEpisodeStaticInfo = new System.Windows.Forms.FlowLayoutPanel();
             this.labelEpisodeTitle = new System.Windows.Forms.Label();
             this.labelPublicationDate = new System.Windows.Forms.Label();
-            this.labelDescription = new System.Windows.Forms.Label();
             this.toolTipEpisodeView = new System.Windows.Forms.ToolTip(this.components);
             this.waveformViewer1 = new PluralsightWinFormsDemoApp.Views.WaveformViewer();
             this.panelEpisodeEditableInfo.SuspendLayout();
@@ -50,6 +50,7 @@
             // 
             // panelEpisodeEditableInfo
             // 
+            this.panelEpisodeEditableInfo.Controls.Add(this.webBrowserEpisodeDescription);
             this.panelEpisodeEditableInfo.Controls.Add(this.waveformViewer1);
             this.panelEpisodeEditableInfo.Controls.Add(this.numericUpDownMyRating);
             this.panelEpisodeEditableInfo.Controls.Add(this.labelMyNotes);
@@ -59,6 +60,12 @@
             this.panelEpisodeEditableInfo.Controls.Add(this.textBoxMyTags);
             resources.ApplyResources(this.panelEpisodeEditableInfo, "panelEpisodeEditableInfo");
             this.panelEpisodeEditableInfo.Name = "panelEpisodeEditableInfo";
+            // 
+            // webBrowserEpisodeDescription
+            // 
+            resources.ApplyResources(this.webBrowserEpisodeDescription, "webBrowserEpisodeDescription");
+            this.webBrowserEpisodeDescription.Name = "webBrowserEpisodeDescription";
+            this.webBrowserEpisodeDescription.ScriptErrorsSuppressed = true;
             // 
             // numericUpDownMyRating
             // 
@@ -101,7 +108,6 @@
             resources.ApplyResources(this.flowLayoutPanelEpisodeStaticInfo, "flowLayoutPanelEpisodeStaticInfo");
             this.flowLayoutPanelEpisodeStaticInfo.Controls.Add(this.labelEpisodeTitle);
             this.flowLayoutPanelEpisodeStaticInfo.Controls.Add(this.labelPublicationDate);
-            this.flowLayoutPanelEpisodeStaticInfo.Controls.Add(this.labelDescription);
             this.flowLayoutPanelEpisodeStaticInfo.Name = "flowLayoutPanelEpisodeStaticInfo";
             // 
             // labelEpisodeTitle
@@ -115,17 +121,13 @@
             resources.ApplyResources(this.labelPublicationDate, "labelPublicationDate");
             this.labelPublicationDate.Name = "labelPublicationDate";
             // 
-            // labelDescription
-            // 
-            resources.ApplyResources(this.labelDescription, "labelDescription");
-            this.labelDescription.Name = "labelDescription";
-            // 
             // waveformViewer1
             // 
             resources.ApplyResources(this.waveformViewer1, "waveformViewer1");
             this.waveformViewer1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             this.waveformViewer1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
             this.waveformViewer1.Name = "waveformViewer1";
+            this.waveformViewer1.PositionInSeconds = 0;
             // 
             // EpisodeView
             // 
@@ -157,8 +159,8 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelEpisodeStaticInfo;
         public System.Windows.Forms.Label labelEpisodeTitle;
         public System.Windows.Forms.Label labelPublicationDate;
-        public System.Windows.Forms.Label labelDescription;
         private System.Windows.Forms.ToolTip toolTipEpisodeView;
         private Views.WaveformViewer waveformViewer1;
+        private System.Windows.Forms.WebBrowser webBrowserEpisodeDescription;
     }
 }

@@ -26,11 +26,17 @@ namespace PluralsightWinFormsDemoApp
         {
             labelTitle.Text = podcastTitle;
         }
+
+        public void SetPoscastUrl(string url)
+        {
+            webBrowser1.Navigate(url);
+        }
     }
 
     public interface IPodcastView
     {
         void SetPodcastTitle(string podcastTitle);
         void SetEpisodeCount(string episodeCount);
+        void SetPoscastUrl(string url);
     }
 }
