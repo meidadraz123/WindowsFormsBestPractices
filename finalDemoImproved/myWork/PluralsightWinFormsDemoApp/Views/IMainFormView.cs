@@ -12,7 +12,6 @@ namespace PluralsightWinFormsDemoApp.Views
         event KeyEventHandler KeyUp;
 
         IPodcastView PodcastView { get; }
-        ISubscriptionView SubscriptionView { get; }
 
         Color BackColor { get; set; }
 

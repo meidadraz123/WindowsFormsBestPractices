@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PluralsightWinFormsDemoApp.Views
@@ -48,11 +42,6 @@ namespace PluralsightWinFormsDemoApp.Views
         {
             treeViewPodcasts.SelectedNode = treeViewPodcasts.Nodes.Find(key, true)[0];
         }
-
-        public bool IsEmpty()
-        {
-            return treeViewPodcasts.Nodes.Count == 0;
-        }
     }
 
     public interface ISubscriptionView
@@ -62,7 +51,6 @@ namespace PluralsightWinFormsDemoApp.Views
         void AddNode(TreeNode treeNode);
         void RemoveNode(string key);
         void SelectNode(string key);
-        bool IsEmpty();
 
         event EventHandler SelectionChanged;
     }

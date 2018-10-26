@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PluralsightWinFormsDemoApp.Views;
+using PluralsightWinFormsDemoApp.Events;
 
 namespace PluralsightWinFormsDemoApp.Commands
 {
@@ -28,7 +29,6 @@ namespace PluralsightWinFormsDemoApp.Commands
             {
                 subscriptionManager.RemovePodcast(podcast);
                 subscriptionView.RemoveNode(podcast.Id.ToString());
-                Utils.SelectFirstEpisode(subscriptionView,subscriptionManager);
             }
 
             else if (subscriptionView.SelectedNode.Tag is Episode episode)
@@ -36,8 +36,8 @@ namespace PluralsightWinFormsDemoApp.Commands
                 var relatedPodcast = subscriptionManager.Podcasts.Where(p => p.Episodes.Where(ep => ep.Guid == episode.Guid).Any()).FirstOrDefault();
                 subscriptionManager.RemovePodcast(relatedPodcast);
                 subscriptionView.RemoveNode(relatedPodcast.Id.ToString());
-                Utils.SelectFirstEpisode(subscriptionView, subscriptionManager);
             }
+            EventAggregator.Instance.Publish(new PodcastLoadCompletedMessage(subscriptionManager.Podcasts.ToArray()));
         }
     }
 }

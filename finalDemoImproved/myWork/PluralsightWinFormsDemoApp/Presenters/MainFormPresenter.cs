@@ -16,7 +16,6 @@ namespace PluralsightWinFormsDemoApp.Presenters
         private readonly ISubscriptionManager subscriptionManager;
         private readonly IPodcastLoader podcastLoader;
 
-        private readonly ISubscriptionView subscriptionView;
         private readonly IPodcastView podcastView;
         private readonly IMessageBoxDisplayService messageBoxDisplayService;
         private readonly ISettingsService settingsService;
@@ -36,8 +35,6 @@ namespace PluralsightWinFormsDemoApp.Presenters
             this.settingsService = settingsService;
             this.commands = commands;
 
-
-            subscriptionView = mainFormView.SubscriptionView;
             podcastView = mainFormView.PodcastView;
 
             this.mainFormView = mainFormView;
@@ -46,24 +43,29 @@ namespace PluralsightWinFormsDemoApp.Presenters
             mainFormView.HelpRequested += OnHelpRequested;
             mainFormView.KeyUp += MainFormViewOnKeyUp;
 
-            subscriptionView.SelectionChanged += OnSelectedEpisodeChanged;
             if (! systemInformationService.IsHighContrastColourScheme)
             {
                 mainFormView.BackColor = System.Drawing.Color.White;
             }
-            subscriptionManager.LoadPodcasts();
+            this.subscriptionManager.LoadPodcasts();
+
+            EventAggregator.Instance.Subscribe<EpisodeSelectedMessage>(m => mainFormView.ShowEpisodeView());
+            EventAggregator.Instance.Subscribe<PodcastSelectedMessage>(m =>
+            {
+                mainFormView.ShowPodcastView();
+                podcastView.SetPodcastTitle(m.Podcast.Title);
+                podcastView.SetEpisodeCount($"{m.Podcast.Episodes.Count} episodes");
+                podcastView.SetPoscastUrl(m.Podcast.Link);
+            } );
         }
 
         private void MainFormViewOnKeyUp(object sender, System.Windows.Forms.KeyEventArgs keyEventArgs)
         {
-            if (subscriptionView.SelectedNode != null && subscriptionView.SelectedNode.Tag is Episode)
+            var command = commands.FirstOrDefault(c => keyEventArgs.KeyData == c.ShortcutKey);
+            if (command != null)
             {
-                var command = commands.FirstOrDefault(c => keyEventArgs.KeyData == c.ShortcutKey);
-                if (command != null)
-                {
-                    command.Execute();
-                    keyEventArgs.Handled = true;
-                }
+                command.Execute();
+                keyEventArgs.Handled = true;
             }
         }
 
@@ -75,11 +77,7 @@ namespace PluralsightWinFormsDemoApp.Presenters
                 var firstFinished = await Task.WhenAny(podcastLoadTask, Task.Delay(5000));
                 if (firstFinished == podcastLoadTask)
                 {
-                    Utils.AddPodcastToSubscriptionView(subscriptionView, podcast);
-                    if (subscriptionView.SelectedNode == null && !subscriptionView.IsEmpty())
-                    {
-                        Utils.SelectFirstEpisode( subscriptionView, subscriptionManager);
-                    } 
+                    EventAggregator.Instance.Publish(new PodcastLoadedMessage(podcast));
                 }
             }
 
@@ -94,28 +92,6 @@ namespace PluralsightWinFormsDemoApp.Presenters
         private void OnHelpRequested(object sender, System.Windows.Forms.HelpEventArgs hlpevent)
         {
             messageBoxDisplayService.Show($"Help for {sender.ToString()}");
-        }
-
-        private void OnSelectedEpisodeChanged(object sender, EventArgs e)
-        {
-            if (subscriptionView.SelectedNode == null)
-            {
-                return;
-            }
-            if (subscriptionView.SelectedNode.Tag is Episode selectedEpisode)
-            {
-                EventAggregator.Instance.Publish(new EpisodeSelectedMessage(selectedEpisode));
-                mainFormView.ShowEpisodeView();
-            }
-
-            if (subscriptionView.SelectedNode.Tag is Podcast selectedPodcast)
-            {
-                EventAggregator.Instance.Publish(new PodcastSelectedMessage(selectedPodcast));
-                mainFormView.ShowPodcastView();
-                podcastView.SetPodcastTitle(selectedPodcast.Title);
-                podcastView.SetEpisodeCount($"{selectedPodcast.Episodes.Count} episodes");
-                podcastView.SetPoscastUrl(selectedPodcast.Link);
-            }
         }
 
         private void MainFormViewOnFormClosed(object sender, System.Windows.Forms.FormClosedEventArgs formClosedEventArgs)

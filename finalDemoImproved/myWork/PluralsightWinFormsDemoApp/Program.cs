@@ -41,26 +41,28 @@ namespace PluralsightWinFormsDemoApp
             var newSubscriptionService = new NewSubscriptionService();
             var toolbarView = new ToolBarView();
             var episodeView = new WpfEpisodeViewHost();
-            var mainFormView = new MainForm(episodeView, toolbarView);
+            var subscriptionView = new SubscriptionView();
+            var mainFormView = new MainForm(episodeView, subscriptionView, toolbarView);
 
             var commands = new IToolbarCommand[]
                 {
-                    new AddSubscriptionCommand(mainFormView.SubscriptionView, 
+                    new AddSubscriptionCommand(subscriptionView, 
                         messageBoxDisplayService,
                         newSubscriptionService,
                         podcastLoader,
                         subscriptionManager),
-                    new RemoveSubscriptionCommand(mainFormView.SubscriptionView,subscriptionManager),
+                    new RemoveSubscriptionCommand(subscriptionView,subscriptionManager),
                     new PlayCommand(podcastPlayer),
                     new PauseCommand(podcastPlayer),
                     new StopCommand(podcastPlayer),
-                    new FavouriteCommand(mainFormView.SubscriptionView),
+                    new FavouriteCommand(subscriptionView),
                     new SettingsCommand()
             };
 
             // for now, keep presenters alive with Tags
             toolbarView.Tag = new ToolbarPresenter(toolbarView, commands);
             episodeView.Tag = new EpisodePresenter(episodeView, podcastPlayer);
+            subscriptionView.Tag = new SubscriptionPresenter(subscriptionView);
 
 
             var mainFormPresenter = new MainFormPresenter(mainFormView,

@@ -8,12 +8,10 @@ namespace PluralsightWinFormsDemoApp.Views
     {
         private readonly Control episodeView;
         private readonly PodcastView podcastView;
-        private readonly SubscriptionView subscriptionView;
 
         public IPodcastView PodcastView { get { return podcastView; } }
-        public ISubscriptionView SubscriptionView { get { return subscriptionView; } }
 
-        public MainForm(Control episodeView, Control toolbarView)
+        public MainForm(Control episodeView, Control subscriptionView, Control toolbarView)
         {
             InitializeComponent();
             toolbarView.Dock = DockStyle.Top;
@@ -21,7 +19,7 @@ namespace PluralsightWinFormsDemoApp.Views
             this.episodeView = episodeView;
             episodeView.Dock = DockStyle.Fill;
             podcastView = new PodcastView() { Dock = DockStyle.Fill };
-            subscriptionView = new SubscriptionView() { Dock = DockStyle.Fill };
+            subscriptionView.Dock = DockStyle.Fill;
             splitContainerMainForm.Panel1.Controls.Add(subscriptionView);
         }
 

@@ -3,6 +3,7 @@ using PluralsightWinFormsDemoApp.BusinessLogic;
 using System.Net;
 using System.Xml;
 using PluralsightWinFormsDemoApp.Views;
+using PluralsightWinFormsDemoApp.Events;
 
 namespace PluralsightWinFormsDemoApp.Commands
 {
@@ -39,7 +40,7 @@ namespace PluralsightWinFormsDemoApp.Commands
                 {
                     await podcastLoader.UpdatePodcast(newPodcast);
                     subscriptionManager.AddPodcast(newPodcast);
-                    Utils.AddPodcastToSubscriptionView(subscriptionView, newPodcast);
+                    EventAggregator.Instance.Publish(new PodcastLoadedMessage(newPodcast));
                 }
                 catch (WebException)
                 {
