@@ -53,8 +53,9 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessLogic\EpisodeSelectedMessage.cs" />
-    <Compile Include="BusinessLogic\EventAggregator.cs" />
+    <Compile Include="Events\ApplicationClosingMessage.cs" />
+    <Compile Include="Events\EpisodeSelectedMessage.cs" />
+    <Compile Include="Events\EventAggregator.cs" />
     <Compile Include="Commands\AddSubscriptionCommand.cs" />
     <Compile Include="BusinessLogic\MessageBoxDisplayService.cs" />
     <Compile Include="BusinessLogic\NewSubscriptionService.cs" />
@@ -65,6 +66,9 @@
     <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Commands\FavouriteCommand.cs" />
     <Compile Include="Commands\IToolbarCommand.cs" />
+    <Compile Include="Events\IApplicationEvent.cs" />
+    <Compile Include="Events\IEventAggregator.cs" />
+    <Compile Include="Events\PodcastSelectedMessage.cs" />
     <Compile Include="Model\Episode.cs" />
     <Compile Include="Commands\PauseCommand.cs" />
     <Compile Include="Commands\PlayCommand.cs" />
@@ -72,6 +76,8 @@
     <Compile Include="Commands\SettingsCommand.cs" />
     <Compile Include="Commands\StopCommand.cs" />
     <Compile Include="BusinessLogic\Utils.cs" />
+    <Compile Include="Presenters\EpisodePresenter.cs" />
+    <Compile Include="Presenters\ToolbarPresenter.cs" />
     <Compile Include="Views\EpisodeView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -90,13 +96,14 @@
     <Compile Include="BusinessLogic\ISettingsService.cs" />
     <Compile Include="BusinessLogic\ISubscriptionManager.cs" />
     <Compile Include="BusinessLogic\ISystemInformationService.cs" />
+    <Compile Include="Views\IMainFormView.cs" />
     <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="BusinessLogic\MainFormPresenter.cs" />
+    <Compile Include="Presenters\MainFormPresenter.cs" />
     <Compile Include="Views\NewPodcastForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -264,6 +271,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,5 +1,6 @@
 ﻿using PluralsightWinFormsDemoApp.BusinessLogic;
 using PluralsightWinFormsDemoApp.Commands;
+using PluralsightWinFormsDemoApp.Presenters;
 using PluralsightWinFormsDemoApp.Views;
 using System;
 using System.Collections.Generic;
@@ -38,11 +39,17 @@ namespace PluralsightWinFormsDemoApp
             var settingsService = new SettingsService();
             var systemInformationService = new SystemInformationService();
             var newSubscriptionService = new NewSubscriptionService();
-            var mainFormView = new MainForm();
+            var toolbarView = new ToolBarView();
+            var episodeView = new WpfEpisodeViewHost();
+            var mainFormView = new MainForm(episodeView, toolbarView);
 
             var commands = new IToolbarCommand[]
                 {
-                    new AddSubscriptionCommand(mainFormView.SubscriptionView, messageBoxDisplayService,newSubscriptionService,podcastLoader,subscriptionManager),
+                    new AddSubscriptionCommand(mainFormView.SubscriptionView, 
+                        messageBoxDisplayService,
+                        newSubscriptionService,
+                        podcastLoader,
+                        subscriptionManager),
                     new RemoveSubscriptionCommand(mainFormView.SubscriptionView,subscriptionManager),
                     new PlayCommand(podcastPlayer),
                     new PauseCommand(podcastPlayer),
@@ -51,10 +58,14 @@ namespace PluralsightWinFormsDemoApp
                     new SettingsCommand()
             };
 
+            // for now, keep presenters alive with Tags
+            toolbarView.Tag = new ToolbarPresenter(toolbarView, commands);
+            episodeView.Tag = new EpisodePresenter(episodeView, podcastPlayer);
+
+
             var mainFormPresenter = new MainFormPresenter(mainFormView,
                 podcastLoader, 
                 subscriptionManager,
-                podcastPlayer,
                 messageBoxDisplayService,
                 settingsService,
                 systemInformationService,

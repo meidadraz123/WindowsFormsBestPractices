@@ -1,43 +1,35 @@
 ﻿using PluralsightWinFormsDemoApp.Model;
 using PluralsightWinFormsDemoApp.BusinessLogic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using PluralsightWinFormsDemoApp.Commands;
 using PluralsightWinFormsDemoApp.Views;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using PluralsightWinFormsDemoApp.Events;
 
-namespace PluralsightWinFormsDemoApp.BusinessLogic
+namespace PluralsightWinFormsDemoApp.Presenters
 {
     class MainFormPresenter
     {
         private readonly IMainFormView mainFormView;
-        private Episode currentEpisode;
-        private readonly IPodcastPlayer podcastPlayer;
         private readonly ISubscriptionManager subscriptionManager;
         private readonly IPodcastLoader podcastLoader;
 
         private readonly ISubscriptionView subscriptionView;
-        private readonly IEpisodeView episodeView;
         private readonly IPodcastView podcastView;
         private readonly IMessageBoxDisplayService messageBoxDisplayService;
         private readonly ISettingsService settingsService;
         private readonly IToolbarCommand[] commands;
-        private readonly Timer timer;
 
         public MainFormPresenter( IMainFormView mainFormView,
             IPodcastLoader podcastLoader,
             ISubscriptionManager subscriptionManager,
-            IPodcastPlayer podcastPlayer,
             IMessageBoxDisplayService messageBoxDisplayService,
             ISettingsService settingsService,
             ISystemInformationService systemInformationService,
             IToolbarCommand[] commands)
         {
-            this.podcastPlayer = podcastPlayer;
             this.subscriptionManager = subscriptionManager;
             this.podcastLoader = podcastLoader;
             this.messageBoxDisplayService = messageBoxDisplayService;
@@ -46,7 +38,6 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
 
 
             subscriptionView = mainFormView.SubscriptionView;
-            episodeView = mainFormView.EpisodeView;
             podcastView = mainFormView.PodcastView;
 
             this.mainFormView = mainFormView;
@@ -54,38 +45,13 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
             mainFormView.FormClosed += MainFormViewOnFormClosed;
             mainFormView.HelpRequested += OnHelpRequested;
             mainFormView.KeyUp += MainFormViewOnKeyUp;
-            mainFormView.ToolbarView.SetCommands(commands);
 
-            timer = new Timer();
-            timer.Interval = 100;
-            timer.Tick += TimerOnTick;
-            timer.Start();
-
-            episodeView.Title = "";
-            episodeView.PublicationDate= "";
             subscriptionView.SelectionChanged += OnSelectedEpisodeChanged;
             if (! systemInformationService.IsHighContrastColourScheme)
             {
                 mainFormView.BackColor = System.Drawing.Color.White;
             }
             subscriptionManager.LoadPodcasts();
-
-            episodeView.PositionChanged += (s, a) => podcastPlayer.PositionInSeconds = episodeView.PositionInSeconds;
-            episodeView.NoteCreated += EpisodeViewOnNoteCreated;
-        }
-
-        private void EpisodeViewOnNoteCreated(object sender, NoteArgs noteArgs)
-        {
-            currentEpisode.Notes = String.Format(episodeView.Notes + $"{noteArgs.Position:hh\\:mm\\:ss}: {noteArgs.Note}\r\n");
-            episodeView.Notes = currentEpisode.Notes;
-        }
-
-        private void TimerOnTick(object sender, EventArgs eventArgs)
-        {
-            if (podcastPlayer != null && podcastPlayer.IsPlaying)
-            {
-                episodeView.PositionInSeconds = podcastPlayer.PositionInSeconds;
-            }
         }
 
         private void MainFormViewOnKeyUp(object sender, System.Windows.Forms.KeyEventArgs keyEventArgs)
@@ -130,9 +96,8 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
             messageBoxDisplayService.Show($"Help for {sender.ToString()}");
         }
 
-        private async void OnSelectedEpisodeChanged(object sender, EventArgs e)
+        private void OnSelectedEpisodeChanged(object sender, EventArgs e)
         {
-            podcastPlayer.UnloadEpisode();
             if (subscriptionView.SelectedNode == null)
             {
                 return;
@@ -141,22 +106,6 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
             {
                 EventAggregator.Instance.Publish(new EpisodeSelectedMessage(selectedEpisode));
                 mainFormView.ShowEpisodeView();
-                SaveEpisode();
-                currentEpisode = selectedEpisode;
-                episodeView.Title = currentEpisode.Title;
-                episodeView.PublicationDate = currentEpisode.PubDate;
-                episodeView.Description = currentEpisode.Description;
-                currentEpisode.IsNew = false;
-                episodeView.Rating= currentEpisode.Rating;
-                episodeView.Tags= String.Join(",", currentEpisode.Tags ?? new string[0]);
-                episodeView.Notes = currentEpisode.Notes ?? "";
-                podcastPlayer.LoadEpisode(currentEpisode);
-                if (currentEpisode.Peaks == null || currentEpisode.Peaks.Length == 0)
-                {
-                    episodeView.SetPeaks(null);
-                    currentEpisode.Peaks = await podcastPlayer.LoadPodcastAsync();
-                }
-                episodeView.SetPeaks(currentEpisode.Peaks);
             }
 
             if (subscriptionView.SelectedNode.Tag is Podcast selectedPodcast)
@@ -171,18 +120,8 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
 
         private void MainFormViewOnFormClosed(object sender, System.Windows.Forms.FormClosedEventArgs formClosedEventArgs)
         {
-            SaveEpisode();
+            EventAggregator.Instance.Publish(new ApplicationClosingMessage());
             subscriptionManager.SavePodcasts();
-            podcastPlayer.Dispose();
-        }
-
-        private void SaveEpisode()
-        {
-            if (currentEpisode == null) return;
-
-            currentEpisode.Tags = episodeView.Tags.Split(new[] { ',' }).Select(s => s.Trim()).ToArray();
-            currentEpisode.Rating = episodeView.Rating;
-            currentEpisode.Notes = episodeView.Notes;
         }
     }
 }
