@@ -16,7 +16,6 @@ namespace PluralsightWinFormsDemoApp.Presenters
         private readonly ISubscriptionManager subscriptionManager;
         private readonly IPodcastLoader podcastLoader;
 
-        private readonly IPodcastView podcastView;
         private readonly IMessageBoxDisplayService messageBoxDisplayService;
         private readonly ISettingsService settingsService;
         private readonly IToolbarCommand[] commands;
@@ -35,8 +34,6 @@ namespace PluralsightWinFormsDemoApp.Presenters
             this.settingsService = settingsService;
             this.commands = commands;
 
-            podcastView = mainFormView.PodcastView;
-
             this.mainFormView = mainFormView;
             mainFormView.Load += MainFormViewOnLoad;
             mainFormView.FormClosed += MainFormViewOnFormClosed;
@@ -50,13 +47,7 @@ namespace PluralsightWinFormsDemoApp.Presenters
             this.subscriptionManager.LoadPodcasts();
 
             EventAggregator.Instance.Subscribe<EpisodeSelectedMessage>(m => mainFormView.ShowEpisodeView());
-            EventAggregator.Instance.Subscribe<PodcastSelectedMessage>(m =>
-            {
-                mainFormView.ShowPodcastView();
-                podcastView.SetPodcastTitle(m.Podcast.Title);
-                podcastView.SetEpisodeCount($"{m.Podcast.Episodes.Count} episodes");
-                podcastView.SetPoscastUrl(m.Podcast.Link);
-            } );
+            EventAggregator.Instance.Subscribe<PodcastSelectedMessage>(m => mainFormView.ShowPodcastView());
         }
 
         private void MainFormViewOnKeyUp(object sender, System.Windows.Forms.KeyEventArgs keyEventArgs)

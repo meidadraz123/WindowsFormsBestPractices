@@ -78,6 +78,7 @@
     <Compile Include="Commands\SettingsCommand.cs" />
     <Compile Include="Commands\StopCommand.cs" />
     <Compile Include="Presenters\EpisodePresenter.cs" />
+    <Compile Include="Presenters\PodcastPresenter.cs" />
     <Compile Include="Presenters\SubscriptionPresenter.cs" />
     <Compile Include="Presenters\ToolbarPresenter.cs" />
     <Compile Include="Views\EpisodeView.cs">
