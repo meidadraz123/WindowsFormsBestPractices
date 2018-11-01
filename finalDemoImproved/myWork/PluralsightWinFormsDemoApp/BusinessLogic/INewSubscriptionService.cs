@@ -1,6 +1,6 @@
 ﻿namespace PluralsightWinFormsDemoApp.BusinessLogic
 {
-    public interface INewSubscriptionService
+    internal interface INewSubscriptionService
     {
         string GetSubscriptionUrl();
     }

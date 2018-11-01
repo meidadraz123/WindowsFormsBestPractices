@@ -1,16 +1,13 @@
-﻿using PluralsightWinFormsDemoApp.Events;
-using PluralsightWinFormsDemoApp.Views;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PluralsightWinFormsDemoApp.Events;
+using PluralsightWinFormsDemoApp.Views;
 
 namespace PluralsightWinFormsDemoApp.Presenters
 {
     class PodcastPresenter
     {
         private readonly IPodcastView podcastView;
+
         public PodcastPresenter(IPodcastView podcastView)
         {
             this.podcastView = podcastView;

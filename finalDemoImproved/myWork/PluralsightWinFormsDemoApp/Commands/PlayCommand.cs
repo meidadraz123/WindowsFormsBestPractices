@@ -1,11 +1,6 @@
-﻿using PluralsightWinFormsDemoApp.BusinessLogic;
-using PluralsightWinFormsDemoApp.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using PluralsightWinFormsDemoApp.BusinessLogic;
+using PluralsightWinFormsDemoApp.Events;
 
 namespace PluralsightWinFormsDemoApp.Commands
 {
@@ -20,14 +15,13 @@ namespace PluralsightWinFormsDemoApp.Commands
             ToolTip = "Play";
             ShortcutKey = Keys.Space | Keys.Control;
             IsEnabled = false;
-            EventAggregator.Instance.Subscribe<EpisodeSelectedMessage>(m => IsEnabled = true);
-            EventAggregator.Instance.Subscribe<PodcastSelectedMessage>(m => IsEnabled = false);
+            EventAggregator.Instance.Subscribe<EpisodeSelectedMessage>(e => IsEnabled = true);
+            EventAggregator.Instance.Subscribe<PodcastSelectedMessage>(e => IsEnabled = false);
         }
+
         public override void Execute()
         {
             player.Play();
         }
-
-
     }
 }

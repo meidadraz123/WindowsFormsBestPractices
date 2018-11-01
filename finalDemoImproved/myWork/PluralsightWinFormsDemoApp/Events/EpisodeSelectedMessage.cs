@@ -8,6 +8,7 @@ namespace PluralsightWinFormsDemoApp.Events
         {
             Episode = episode;
         }
+
         public Episode Episode { get; private set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace PluralsightWinFormsDemoApp.BusinessLogic
 {
-    public interface IMessageBoxDisplayService
+    internal interface IMessageBoxDisplayService
     {
-        void Show( string text);
+        void Show(string message);
     }
 }

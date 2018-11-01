@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PluralsightWinFormsDemoApp.Commands
@@ -21,9 +16,9 @@ namespace PluralsightWinFormsDemoApp.Commands
             isEnabled = true;
         }
 
-        protected virtual void OnPropertyChanged(string proprtyName)
+        protected virtual void OnPropertyChanged(string propertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(proprtyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public abstract void Execute();
@@ -68,6 +63,5 @@ namespace PluralsightWinFormsDemoApp.Commands
         }
 
         public Keys ShortcutKey { get; set; }
-
     }
 }

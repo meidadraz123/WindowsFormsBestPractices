@@ -20,7 +20,7 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
             LoadPodcasts();
         }
 
-        public void LoadPodcasts()
+        private void LoadPodcasts()
         {
             if (File.Exists(podcastsSubscriptionFilePath))
             {
@@ -44,27 +44,27 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
             }
         }
 
-        public void SavePodcasts()
+        public void Save()
         {
             var serializer = new XmlSerializer(typeof(List<Podcast>));
             using (var s = File.Create(podcastsSubscriptionFilePath))
             {
-                serializer.Serialize(s, Podcasts);
+                serializer.Serialize(s, Subscriptions);
             }
         }
 
-        public void AddPodcast(Podcast podcast)
+        public void AddSubscription(Podcast podcast)
         {
             podcasts.Add(podcast);
-            SavePodcasts();
+            Save();
         }
 
-        public void RemovePodcast(Podcast podcast)
+        public void RemoveSubscription(Podcast podcast)
         {
             podcasts.Remove(podcast);
-            SavePodcasts();
+            Save();
         }
 
-        public IEnumerable<Podcast> Podcasts { get { return podcasts; } }
+        public IEnumerable<Podcast> Subscriptions { get { return podcasts; } }
     }
 }

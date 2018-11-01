@@ -1,9 +1,4 @@
-﻿using PluralsightWinFormsDemoApp.BusinessLogic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PluralsightWinFormsDemoApp.BusinessLogic;
 
 namespace PluralsightWinFormsDemoApp.Commands
 {
@@ -17,6 +12,7 @@ namespace PluralsightWinFormsDemoApp.Commands
             Icon = IconResources.pause_icon_32;
             ToolTip = "Pause";
         }
+
         public override void Execute()
         {
             player.Pause();

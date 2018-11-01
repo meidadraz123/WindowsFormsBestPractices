@@ -1,26 +1,23 @@
-﻿using PluralsightWinFormsDemoApp.Model;
+﻿using System;
+using PluralsightWinFormsDemoApp.Model;
 using PluralsightWinFormsDemoApp.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PluralsightWinFormsDemoApp.Commands
 {
     class FavouriteCommand : CommandBase
     {
-        private Episode currentEpisode;
         private readonly ISubscriptionView subscriptionView;
+        private Episode currentEpisode;
+
         public FavouriteCommand(ISubscriptionView subscriptionView)
         {
             this.subscriptionView = subscriptionView;
             ToolTip = "Favourite";
             SetIcon();
-            subscriptionView.SelectionChanged += OnSubscriptionViewSelectionChanged;
+            subscriptionView.SelectionChanged += SubscriptionViewOnSelectionChanged;
         }
 
-        private void OnSubscriptionViewSelectionChanged(object sender, EventArgs e)
+        private void SubscriptionViewOnSelectionChanged(object sender, EventArgs eventArgs)
         {
             if (subscriptionView.SelectedNode.Tag is Episode episode)
             {

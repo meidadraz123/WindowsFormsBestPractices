@@ -1,9 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace PluralsightWinFormsDemoApp.Commands
 {
     class SettingsCommand : CommandBase
@@ -13,6 +7,10 @@ namespace PluralsightWinFormsDemoApp.Commands
             Icon = IconResources.settings_icon_32;
             ToolTip = "Settings";
         }
-        public override void Execute() { }
+
+        public override void Execute()
+        {
+            // not yet implemented
+        }
     }
 }

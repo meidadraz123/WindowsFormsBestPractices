@@ -1,6 +1,6 @@
-﻿namespace PluralsightWinFormsDemoApp.BusinessLogic
+namespace PluralsightWinFormsDemoApp.BusinessLogic
 {
-    public interface ISystemInformationService
+    internal interface ISystemInformationService
     {
         bool IsHighContrastColourScheme { get; }
     }

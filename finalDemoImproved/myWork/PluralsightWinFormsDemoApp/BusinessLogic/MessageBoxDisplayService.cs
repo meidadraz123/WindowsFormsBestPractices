@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace PluralsightWinFormsDemoApp.BusinessLogic
 {
-    class MessageBoxDisplayService : IMessageBoxDisplayService
+    internal class MessageBoxDisplayService : IMessageBoxDisplayService
     {
-        public void Show( string text)
+        public void Show(string message)
         {
-            MessageBox.Show(text);
+            MessageBox.Show(message);
         }
     }
 }

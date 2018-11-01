@@ -1,14 +1,11 @@
-﻿using PluralsightWinFormsDemoApp.BusinessLogic;
+﻿using System;
+using System.Globalization;
+using System.Threading;
+using System.Windows.Forms;
+using PluralsightWinFormsDemoApp.BusinessLogic;
 using PluralsightWinFormsDemoApp.Commands;
 using PluralsightWinFormsDemoApp.Presenters;
 using PluralsightWinFormsDemoApp.Views;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace PluralsightWinFormsDemoApp
 {
@@ -32,23 +29,22 @@ namespace PluralsightWinFormsDemoApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            var subscriptionManager = new SubscriptionManager("subscriptions.xml");
-            var podcastLoader = new PodcastLoader();
-            var podcastPlayer = new PodcastPlayer();
-            var messageBoxDisplayService = new MessageBoxDisplayService();
-            var settingsService = new SettingsService();
-            var systemInformationService = new SystemInformationService();
-            var newSubscriptionService = new NewSubscriptionService();
-            var toolbarView = new ToolBarView();
             var episodeView = new WpfEpisodeViewHost();
             var subscriptionView = new SubscriptionView();
             var podcastView = new PodcastView();
-            var mainFormView = new MainForm(episodeView, subscriptionView, podcastView, toolbarView);
+            var toolbarView = new ToolBarView();
+
+            var podcastPlayer = new PodcastPlayer();
+            var podcastLoader = new PodcastLoader();
+            var settingsService = new SettingsService();
+            var subscriptionManager = new SubscriptionManager("subscriptions.xml");
+            var messageBoxDisplayService = new MessageBoxDisplayService();
+            var systemInformationService = new SystemInformationService();
+            var newSubscriptionService = new NewSubscriptionService();
 
             var commands = new IToolbarCommand[]
                 {
-                    new AddSubscriptionCommand(subscriptionView, 
-                        messageBoxDisplayService,
+                    new AddSubscriptionCommand(messageBoxDisplayService,
                         newSubscriptionService,
                         podcastLoader,
                         subscriptionManager),
@@ -59,22 +55,22 @@ namespace PluralsightWinFormsDemoApp
                     new FavouriteCommand(subscriptionView),
                     new SettingsCommand()
             };
+            var mainForm = new MainForm(episodeView, subscriptionView, podcastView, toolbarView);
 
             // for now, keep presenters alive with Tags
-            toolbarView.Tag = new ToolbarPresenter(toolbarView, commands);
             episodeView.Tag = new EpisodePresenter(episodeView, podcastPlayer);
             subscriptionView.Tag = new SubscriptionPresenter(subscriptionView);
             podcastView.Tag = new PodcastPresenter(podcastView);
+            toolbarView.Tag = new ToolbarPresenter(toolbarView, commands);
 
-            mainFormView.Tag = new MainFormPresenter(mainFormView,
-                podcastLoader, 
+            mainForm.Tag = new MainFormPresenter(mainForm,
+                podcastLoader,
                 subscriptionManager,
                 messageBoxDisplayService,
                 settingsService,
                 systemInformationService,
                 commands);
-
-            Application.Run(mainFormView);
+            Application.Run(mainForm);
         }
 
         private static void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -85,6 +81,7 @@ namespace PluralsightWinFormsDemoApp
             Console.WriteLine($"ERROR {DateTimeOffset.Now}:{(Exception)e.ExceptionObject}");
 
             MessageBox.Show(message, "Unexpected Error");
+
         }
 
         private static void ApplicationOnThreadException(object sender, ThreadExceptionEventArgs e)

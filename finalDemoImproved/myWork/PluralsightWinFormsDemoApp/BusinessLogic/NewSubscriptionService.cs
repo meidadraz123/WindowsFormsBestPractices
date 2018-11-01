@@ -1,20 +1,14 @@
-﻿using PluralsightWinFormsDemoApp.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using PluralsightWinFormsDemoApp.Views;
 
 namespace PluralsightWinFormsDemoApp.BusinessLogic
 {
-    class NewSubscriptionService : INewSubscriptionService
+    internal class NewSubscriptionService : INewSubscriptionService
     {
         public string GetSubscriptionUrl()
         {
             var form = new NewPodcastForm();
-            var result = form.ShowDialog();
-            return result == DialogResult.OK ? form.PodcastUrl : null;
+            return form.ShowDialog() == DialogResult.OK ? form.PodcastUrl : null;
         }
     }
 }

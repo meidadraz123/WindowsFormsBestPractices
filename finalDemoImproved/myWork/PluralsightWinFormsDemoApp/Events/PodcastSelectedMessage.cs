@@ -1,4 +1,4 @@
-﻿using PluralsightWinFormsDemoApp.Model;
+using PluralsightWinFormsDemoApp.Model;
 
 namespace PluralsightWinFormsDemoApp.Events
 {
@@ -8,6 +8,7 @@ namespace PluralsightWinFormsDemoApp.Events
         {
             Podcast = podcast;
         }
+
         public Podcast Podcast { get; private set; }
     }
 }

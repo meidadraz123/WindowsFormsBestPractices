@@ -1,14 +1,14 @@
-﻿using PluralsightWinFormsDemoApp.Model;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using PluralsightWinFormsDemoApp.Model;
 
 namespace PluralsightWinFormsDemoApp.BusinessLogic
 {
-    public interface ISubscriptionManager
+    internal interface ISubscriptionManager
     {
-        void LoadPodcasts();
-        void SavePodcasts();
-        void AddPodcast(Podcast podcast);
-        void RemovePodcast(Podcast podcast);
-        IEnumerable<Podcast> Podcasts { get; }
+        void Save();
+
+        void AddSubscription(Podcast podcast);
+        void RemoveSubscription(Podcast podcast);
+        IEnumerable<Podcast> Subscriptions { get; }
     }
 }

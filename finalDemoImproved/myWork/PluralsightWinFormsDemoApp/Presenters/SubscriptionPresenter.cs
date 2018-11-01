@@ -1,12 +1,10 @@
-﻿using PluralsightWinFormsDemoApp.Events;
+using System;
+using System.Linq;
+using System.Windows.Forms;
+using PluralsightWinFormsDemoApp.BusinessLogic;
+using PluralsightWinFormsDemoApp.Events;
 using PluralsightWinFormsDemoApp.Model;
 using PluralsightWinFormsDemoApp.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace PluralsightWinFormsDemoApp.Presenters
 {
@@ -17,16 +15,14 @@ namespace PluralsightWinFormsDemoApp.Presenters
         {
             this.subscriptionView = subscriptionView;
             subscriptionView.SelectionChanged += OnSelectedEpisodeChanged;
-            EventAggregator.Instance.Subscribe<PodcastLoadedMessage>(m => AddPodcastToSubscriptionView(m.Podcast));
-            EventAggregator.Instance.Subscribe<PodcastLoadCompletedMessage>(m => SelectFirstEpisode(m.Podcasts));
+            EventAggregator.Instance.Subscribe<PodcastLoadedMessage>(m => AddPodcastToTreeView(m.Podcast));
+            EventAggregator.Instance.Subscribe<PodcastLoadCompleteMessage>(m => SelectFirstEpisode(m.Subscriptions));
         }
 
         private void OnSelectedEpisodeChanged(object sender, EventArgs e)
         {
-            if (subscriptionView.SelectedNode == null)
-            {
-                return;
-            }
+            if (subscriptionView.SelectedNode == null) return;
+
             if (subscriptionView.SelectedNode.Tag is Episode selectedEpisode)
             {
                 EventAggregator.Instance.Publish(new EpisodeSelectedMessage(selectedEpisode));
@@ -38,17 +34,18 @@ namespace PluralsightWinFormsDemoApp.Presenters
             }
         }
 
-        private void AddPodcastToSubscriptionView( Podcast podcast)
+        public void AddPodcastToTreeView(Podcast podcast)
         {
-            var podcastNode = new TreeNode(podcast.Title) { Tag = podcast, Name = podcast.Id.ToString() };
+            var podNode = new TreeNode(podcast.Title) { Tag = podcast, Name = podcast.Id.ToString() };
             foreach (var episode in podcast.Episodes)
             {
-                podcastNode.Nodes.Add(new TreeNode(episode.Title) { Tag = episode, Name = episode.Guid });
+                podNode.Nodes.Add(new TreeNode(episode.Title) { Tag = episode, Name = episode.Guid });
             }
-            subscriptionView.AddNode(podcastNode);
+
+            subscriptionView.AddNode(podNode);
             if (subscriptionView.SelectedNode == null)
             {
-                subscriptionView.SelectNode(podcastNode.FirstNode.Name);
+                subscriptionView.SelectNode(podNode.FirstNode.Name);
             }
         }
 

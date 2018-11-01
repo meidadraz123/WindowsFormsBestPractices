@@ -1,19 +1,18 @@
-﻿using PluralsightWinFormsDemoApp.BusinessLogic;
-using PluralsightWinFormsDemoApp.Events;
-using PluralsightWinFormsDemoApp.Model;
-using PluralsightWinFormsDemoApp.Views;
 using System;
 using System.Linq;
 using System.Windows.Forms;
+using PluralsightWinFormsDemoApp.BusinessLogic;
+using PluralsightWinFormsDemoApp.Events;
+using PluralsightWinFormsDemoApp.Model;
+using PluralsightWinFormsDemoApp.Views;
 
 namespace PluralsightWinFormsDemoApp.Presenters
 {
     class EpisodePresenter
     {
-        private Episode currentEpisode;
-        private readonly Timer timer;
         private readonly IEpisodeView episodeView;
         private readonly IPodcastPlayer podcastPlayer;
+        private Episode currentEpisode;
 
         public EpisodePresenter(IEpisodeView episodeView, IPodcastPlayer podcastPlayer)
         {
@@ -21,19 +20,35 @@ namespace PluralsightWinFormsDemoApp.Presenters
             this.podcastPlayer = podcastPlayer;
             episodeView.Title = "";
             episodeView.PublicationDate = "";
+            this.episodeView.NoteCreated += EpisodeViewOnNoteCreated;
             episodeView.PositionChanged += (s, a) => podcastPlayer.PositionInSeconds = episodeView.PositionInSeconds;
-            episodeView.NoteCreated += EpisodeViewOnNoteCreated;
 
-            timer = new Timer { Interval = 100 };
+            var timer = new Timer {Interval = 100};
             timer.Tick += TimerOnTick;
             timer.Start();
 
-            EventAggregator.Instance.Subscribe<EpisodeSelectedMessage>(OnSelectedEpisodeChanged);
+            EventAggregator.Instance.Subscribe<EpisodeSelectedMessage>(OnEpisodeSelected);
+            EventAggregator.Instance.Subscribe<PodcastSelectedMessage>(OnPodcastSelected);
             EventAggregator.Instance.Subscribe<ApplicationClosingMessage>(m => 
             {
                 SaveEpisode();
                 podcastPlayer.Dispose();
             });
+            EventAggregator.Instance.Subscribe<PeaksAvailableMessage>(OnPeaksAvailable);
+        }
+
+        private void OnPeaksAvailable(PeaksAvailableMessage obj)
+        {
+            if (obj.Episode == currentEpisode)
+            {
+                episodeView.SetPeaks(obj.Episode.Peaks);
+            }
+        }
+
+    private void OnPodcastSelected(PodcastSelectedMessage obj)
+        {
+            SaveEpisode();
+            currentEpisode = null;
         }
 
         private void EpisodeViewOnNoteCreated(object sender, NoteArgs noteArgs)
@@ -42,19 +57,12 @@ namespace PluralsightWinFormsDemoApp.Presenters
             episodeView.Notes = currentEpisode.Notes;
         }
 
-        private void TimerOnTick(object sender, EventArgs eventArgs)
-        {
-            if (podcastPlayer != null && podcastPlayer.IsPlaying)
-            {
-                episodeView.PositionInSeconds = podcastPlayer.PositionInSeconds;
-            }
-        }
-
-        private async void OnSelectedEpisodeChanged(EpisodeSelectedMessage episodeSelectedMessage)
+        private async void OnEpisodeSelected(EpisodeSelectedMessage episodeSelected)
         {
             podcastPlayer.UnloadEpisode();
             SaveEpisode();
-            currentEpisode = episodeSelectedMessage.Episode;
+            currentEpisode = episodeSelected.Episode;
+
             episodeView.Title = currentEpisode.Title;
             episodeView.PublicationDate = currentEpisode.PubDate;
             episodeView.Description = currentEpisode.Description;
@@ -62,13 +70,17 @@ namespace PluralsightWinFormsDemoApp.Presenters
             episodeView.Rating = currentEpisode.Rating;
             episodeView.Tags = String.Join(",", currentEpisode.Tags ?? new string[0]);
             episodeView.Notes = currentEpisode.Notes ?? "";
+            episodeView.PositionInSeconds = 0;
             podcastPlayer.LoadEpisode(currentEpisode);
             if (currentEpisode.Peaks == null || currentEpisode.Peaks.Length == 0)
             {
                 episodeView.SetPeaks(null);
-                currentEpisode.Peaks = await podcastPlayer.LoadPodcastAsync();
+                await podcastPlayer.LoadPeaksAsync();
             }
-            episodeView.SetPeaks(currentEpisode.Peaks);
+            else
+            {
+                episodeView.SetPeaks(currentEpisode.Peaks); 
+            }
         }
 
         private void SaveEpisode()
@@ -78,6 +90,14 @@ namespace PluralsightWinFormsDemoApp.Presenters
             currentEpisode.Tags = episodeView.Tags.Split(new[] { ',' }).Select(s => s.Trim()).ToArray();
             currentEpisode.Rating = episodeView.Rating;
             currentEpisode.Notes = episodeView.Notes;
+        }
+
+        private void TimerOnTick(object sender, EventArgs eventArgs)
+        {
+            if (podcastPlayer != null && podcastPlayer.IsPlaying)
+            {
+                episodeView.PositionInSeconds = podcastPlayer.PositionInSeconds;
+            }
         }
     }
 }

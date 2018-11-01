@@ -1,46 +1,44 @@
-﻿using PluralsightWinFormsDemoApp.Model;
-using PluralsightWinFormsDemoApp.BusinessLogic;
+using System.IO;
 using System.Net;
 using System.Xml;
-using PluralsightWinFormsDemoApp.Views;
+using PluralsightWinFormsDemoApp.BusinessLogic;
 using PluralsightWinFormsDemoApp.Events;
+using PluralsightWinFormsDemoApp.Model;
 
 namespace PluralsightWinFormsDemoApp.Commands
 {
     class AddSubscriptionCommand : CommandBase
     {
-        private readonly ISubscriptionView subscriptionView;
         private readonly IMessageBoxDisplayService messageBoxDisplayService;
         private readonly INewSubscriptionService newSubscriptionService;
         private readonly IPodcastLoader podcastLoader;
         private readonly ISubscriptionManager subscriptionManager;
 
-        public AddSubscriptionCommand(ISubscriptionView subscriptionView,
+        public AddSubscriptionCommand(
             IMessageBoxDisplayService messageBoxDisplayService,
             INewSubscriptionService newSubscriptionService,
             IPodcastLoader podcastLoader,
             ISubscriptionManager subscriptionManager)
         {
-            this.subscriptionView = subscriptionView;
             this.messageBoxDisplayService = messageBoxDisplayService;
             this.newSubscriptionService = newSubscriptionService;
             this.podcastLoader = podcastLoader;
             this.subscriptionManager = subscriptionManager;
-
             Icon = IconResources.add_icon_32;
             ToolTip = "Add Subscription";
         }
-        public override async void Execute()
+
+        public async override void Execute()
         {
-            var newPodcastSubscription = newSubscriptionService.GetSubscriptionUrl();
-            if (newPodcastSubscription != null)
+            var newPodcastUrl = newSubscriptionService.GetSubscriptionUrl();
+            if (newPodcastUrl != null)
             {
-                var newPodcast = new Podcast() { SubscriptionUrl = newPodcastSubscription };
+                var pod = new Podcast { SubscriptionUrl = newPodcastUrl };
                 try
                 {
-                    await podcastLoader.UpdatePodcast(newPodcast);
-                    subscriptionManager.AddPodcast(newPodcast);
-                    EventAggregator.Instance.Publish(new PodcastLoadedMessage(newPodcast));
+                    await podcastLoader.UpdatePodcast(pod);
+                    subscriptionManager.AddSubscription(pod);
+                    EventAggregator.Instance.Publish(new PodcastLoadedMessage(pod));
                 }
                 catch (WebException)
                 {
@@ -48,9 +46,9 @@ namespace PluralsightWinFormsDemoApp.Commands
                 }
                 catch (XmlException)
                 {
-                    messageBoxDisplayService.Show("Sorry, the URL is not a podcast feed");
+                    messageBoxDisplayService.Show("Sorry, that URL is not a podcast feed");
                 }
-                catch (XmlRssChannelNodeNotFoundException ex)
+                catch (InvalidDataException ex)
                 {
                     messageBoxDisplayService.Show(ex.Message);
                 }

@@ -68,7 +68,8 @@
     <Compile Include="Commands\IToolbarCommand.cs" />
     <Compile Include="Events\IApplicationEvent.cs" />
     <Compile Include="Events\IEventAggregator.cs" />
-    <Compile Include="Events\PodcastLoadCompletedMessage.cs" />
+    <Compile Include="Events\PeaksAvailableMessage.cs" />
+    <Compile Include="Events\PodcastLoadCompleteMessage.cs" />
     <Compile Include="Events\PodcastLoadedMessage.cs" />
     <Compile Include="Events\PodcastSelectedMessage.cs" />
     <Compile Include="Model\Episode.cs" />
@@ -165,7 +166,6 @@
       <DependentUpon>WpfEpisodeViewHost.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\WpfWaveformControl.xaml.cs" />
-    <Compile Include="XmlRssChannelNodeNotFoundException.cs" />
     <EmbeddedResource Include="Views\EpisodeView.en-GB.resx">
       <DependentUpon>EpisodeView.cs</DependentUpon>
       <SubType>Designer</SubType>

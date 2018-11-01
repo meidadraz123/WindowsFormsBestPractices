@@ -4,14 +4,14 @@ using System.Threading.Tasks;
 
 namespace PluralsightWinFormsDemoApp.BusinessLogic
 {
-    public interface IPodcastPlayer : IDisposable
+    internal interface IPodcastPlayer : IDisposable
     {
         void LoadEpisode(Episode selectedEpisode);
         void UnloadEpisode();
         Task Play();
         void Stop();
         void Pause();
-        Task<float[]> LoadPodcastAsync();
+        Task LoadPeaksAsync();
         int PositionInSeconds { get; set; }
         bool IsPlaying { get; }
     }

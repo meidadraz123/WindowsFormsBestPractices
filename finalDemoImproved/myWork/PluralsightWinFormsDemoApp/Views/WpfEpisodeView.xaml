@@ -33,8 +33,8 @@
             </Grid>
             <TextBlock Text="Notes:" VerticalAlignment="Center" Margin="2"></TextBlock>
         </StackPanel>
-        <TextBox Grid.Row ="1" Margin ="5" x:Name="TextBoxNotes"/>
-
+        <TextBox Grid.Row ="1" Margin ="5" x:Name="TextBoxNotes"></TextBox>
+        
         <views:WpfWaveformControl Grid.Row="2" Height="80" x:Name="WaveformControl" />
 
     </Grid>

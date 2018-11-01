@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PluralsightWinFormsDemoApp.Properties;
+﻿using PluralsightWinFormsDemoApp.Properties;
 
 namespace PluralsightWinFormsDemoApp.BusinessLogic
 {
-    class SettingsService : ISettingsService
+    internal class SettingsService : ISettingsService
     {
         public bool FirstRun
         {

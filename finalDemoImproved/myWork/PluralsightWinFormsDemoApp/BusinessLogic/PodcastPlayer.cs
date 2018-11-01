@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NAudio.Wave;
+using PluralsightWinFormsDemoApp.Events;
 using PluralsightWinFormsDemoApp.Model;
 
 namespace PluralsightWinFormsDemoApp.BusinessLogic
@@ -96,16 +97,17 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
             }
         }
 
-        public Task<float[]> LoadPodcastAsync()
+        public async Task LoadPeaksAsync()
         {
-            return Task.Run(() =>
+            var episode = currentEpisode;
+            await Task.Run(() =>
             {
-                if (currentEpisode == null)
+                if (episode == null)
                 {
-                    return null;
+                    return;
                 }
                 var peaks = new List<float>();
-                using (var reader = new MediaFoundationReader(currentEpisode.AudioFile))
+                using (var reader = new MediaFoundationReader(episode.AudioFile))
                 {
                     var sampleProvider = reader.ToSampleProvider();
                     var sampleBuffer = new float[reader.WaveFormat.SampleRate * reader.WaveFormat.Channels];
@@ -119,9 +121,10 @@ namespace PluralsightWinFormsDemoApp.BusinessLogic
                             peaks.Add(max);
                         }
                     } while (read > 0);
+                    episode.Peaks = peaks.ToArray();
                 }
-                return peaks.ToArray();
             });
+            EventAggregator.Instance.Publish(new PeaksAvailableMessage(episode));
         }
 
         private int positionInSeconds;
